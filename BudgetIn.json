@@ -640,6 +640,86 @@
           }
         }
       }
+    },
+    "/auth/logout": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "User Management"
+        ],
+        "summary": "User LogOut",
+        "description": "Endpoint for User Logout",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully"
+            
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
