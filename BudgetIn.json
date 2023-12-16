@@ -720,6 +720,167 @@
           }
         }
       }
+    },
+    "/contacts": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Contact Management"
+        ],
+        "summary": "Add User Contact",
+        "description": "Endpoint for Add User Contact",
+        "requestBody": {
+          "description": "User Contact Data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contact"
+              },
+              "examples": {
+                "Add Contact": {
+                  "description": "User Data for Add User Contact",
+                  "value": {
+                    "firstName": "firstName",
+                    "lastName": "lastName",
+                    "email": "email@email.com",
+                    "phone": "1234567890"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "maxLength": 100,
+                      "pattern": "[\\n\\s\\w\\W^$]"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        },
+                        "email": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "location": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success Add device",
+                    "value": {
+                      "message": "User Created",
+                      "data": {
+                        "id": "random string for id contact",
+                        "firstName": "firstName",
+                        "lastName": "lastName",
+                        "email": "email@email.com",
+                        "phone": "1234567890"
+                      },
+                      "meta": {
+                        "location": "https://api/v1/user/1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                 "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -810,6 +971,32 @@
             "maxLength": 500
           },
           "name": {
+            "type": "string",
+            "pattern": "[\\n\\s\\w\\W^$]",
+            "maxLength": 500
+          }
+        }
+      },
+      "contact": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "maxLength": 500,
+            "pattern": "[\\n\\s\\w\\W^$]"
+          },
+          "lastName": {
+            "type": "string",
+            "pattern": "[\\n\\s\\w\\W^$]",
+            "maxLength": 500
+          },
+          "email": {
+            "type": "string",
+            "pattern": "[\\n\\s\\w\\W^$]",
+            "maxLength": 500
+          },
+          "phone": {
             "type": "string",
             "pattern": "[\\n\\s\\w\\W^$]",
             "maxLength": 500
