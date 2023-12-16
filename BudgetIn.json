@@ -880,6 +880,201 @@
             }
           }
         }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Contact Management"
+        ],
+        "summary": "Update User Contact",
+        "description": "Endpoint for Update User Contact",
+        "requestBody": {
+          "description": "User Contact Data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contact"
+              },
+              "examples": {
+                "Update Email": {
+                  "description": "User Data for Update User Contact",
+                  "value": {
+                    "firstName": "old firstName",
+                    "lastName": "old lastName",
+                    "email": "new email@email.com",
+                    "phone": "old 1234567890"
+                  }
+                },
+                "Update All Contact Data": {
+                  "description": "User Data for Update All Contact Data",
+                  "value": {
+                    "firstName": "new firstName",
+                    "lastName": "new lastName",
+                    "email": "new email@email.com",
+                    "phone": "new 1234567890"
+                  }
+                },
+                "Update First Name": {
+                  "description": "User Data for Update User firstName",
+                  "value": {
+                    "firstName": "new firstName",
+                    "lastName": "old lastName",
+                    "email": "old email@email.com",
+                    "phone": "old 1234567890"
+                  }
+                },
+                "Update Last Name": {
+                  "description": "User Data for Update User lastName",
+                  "value": {
+                    "firstName": "old firstName",
+                    "lastName": "new lastName",
+                    "email": "old email@email.com",
+                    "phone": "old 1234567890"
+                  }
+                },
+                "Update Phone": {
+                  "description": "User Data for Update User Phone",
+                  "value": {
+                    "firstName": "old firstName",
+                    "lastName": "old lastName",
+                    "email": "old email@email.com",
+                    "phone": "new 1234567890"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "maxLength": 100,
+                      "pattern": "[\\n\\s\\w\\W^$]"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        },
+                        "email": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "location": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success Add device",
+                    "value": {
+                      "message": "User Created",
+                      "data": {
+                        "id": "random string for id contact",
+                        "firstName": "firstName",
+                        "lastName": "lastName",
+                        "email": "email@email.com",
+                        "phone": "1234567890"
+                      },
+                      "meta": {
+                        "location": "https://api/v1/user/1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                 "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
