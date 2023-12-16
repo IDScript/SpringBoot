@@ -283,112 +283,6 @@
         }
       }
     },
-    "/auth/login": {
-      "post": {
-        "tags": [
-          "User Management"
-        ],
-        "summary": "User Login",
-        "description": "Endpoint for User Login",
-        "requestBody": {
-          "description": "ID dari device yang ingin ditambahkan.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/login"
-              },
-              "examples": {
-                "example": {
-                  "description": "Login request body",
-                  "value": {
-                    "username": "example",
-                    "password": "Secret"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "success": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/user/{user_id}": {
       "get": {
         "security": [
@@ -641,6 +535,112 @@
         }
       }
     },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "User Management"
+        ],
+        "summary": "User Login",
+        "description": "Endpoint for User Login",
+        "requestBody": {
+          "description": "ID dari device yang ingin ditambahkan.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              },
+              "examples": {
+                "example": {
+                  "description": "Login request body",
+                  "value": {
+                    "username": "example",
+                    "password": "Secret"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/logout": {
       "delete": {
         "security": [
@@ -830,151 +830,6 @@
           }
         }
       },
-      "put": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "tags": [
-          "Contact Management"
-        ],
-        "summary": "Update User Contact",
-        "description": "Endpoint for Update User Contact",
-        "requestBody": {
-          "description": "User Contact Data",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/contactReq"
-              },
-              "examples": {
-                "Update Email": {
-                  "description": "User Data for Update User Contact",
-                  "value": {
-                    "firstName": "old firstName",
-                    "lastName": "old lastName",
-                    "email": "new email@email.com",
-                    "phone": "old 1234567890"
-                  }
-                },
-                "Update All Contact Data": {
-                  "description": "User Data for Update All Contact Data",
-                  "value": {
-                    "firstName": "new firstName",
-                    "lastName": "new lastName",
-                    "email": "new email@email.com",
-                    "phone": "new 1234567890"
-                  }
-                },
-                "Update First Name": {
-                  "description": "User Data for Update User firstName",
-                  "value": {
-                    "firstName": "new firstName",
-                    "lastName": "old lastName",
-                    "email": "old email@email.com",
-                    "phone": "old 1234567890"
-                  }
-                },
-                "Update Last Name": {
-                  "description": "User Data for Update User lastName",
-                  "value": {
-                    "firstName": "old firstName",
-                    "lastName": "new lastName",
-                    "email": "old email@email.com",
-                    "phone": "old 1234567890"
-                  }
-                },
-                "Update Phone": {
-                  "description": "User Data for Update User Phone",
-                  "value": {
-                    "firstName": "old firstName",
-                    "lastName": "old lastName",
-                    "email": "old email@email.com",
-                    "phone": "new 1234567890"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/contactRes"
-                },
-                "examples": {
-                  "success": {
-                    "description": "Success Add device",
-                    "value": {
-                      "message": "User Created",
-                      "data": {
-                        "id": "random string for id contact",
-                        "firstName": "firstName",
-                        "lastName": "lastName",
-                        "email": "email@email.com",
-                        "phone": "1234567890"
-                      },
-                      "meta": {
-                        "location": "https://api/v1/user/1"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "get": {
         "security": [
           {
@@ -984,20 +839,36 @@
         "tags": [
           "Contact Management"
         ],
-        "summary": "Contact List",
-        "description": "Endpoint for show Users List",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/contact_id"
+        "summary": "Search Contact",
+        "description": "Endpoint for Search Contact",
+        "requestBody": {
+          "description": "Search User Contact Data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contactReq"
+              },
+              "examples": {
+                "Add Contact": {
+                  "description": "User Data for Search User Contact",
+                  "value": {
+                    "name": "firstName or/and lastname",
+                    "email": "email@email.com",
+                    "phone": "1234567890"
+                  }
+                }
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
+                  "$ref": "#/components/schemas/contactRes"
                 },
                 "examples": {
                   "success": {
@@ -1097,6 +968,11 @@
         ],
         "summary": "Get Contact Data",
         "description": "Endpoint for show Contact Data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/contact_id"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1153,6 +1029,156 @@
                 "examples": {
                   "Unauthorized": {
                     "$ref": "#/components/examples/Forbidden"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Contact Management"
+        ],
+        "summary": "Update User Contact",
+        "description": "Endpoint for Update User Contact",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/contact_id"
+          }
+        ],
+        "requestBody": {
+          "description": "User Contact Data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contactReq"
+              },
+              "examples": {
+                "Update Email": {
+                  "description": "User Data for Update User Contact",
+                  "value": {
+                    "firstName": "old firstName",
+                    "lastName": "old lastName",
+                    "email": "new email@email.com",
+                    "phone": "old 1234567890"
+                  }
+                },
+                "Update All Contact Data": {
+                  "description": "User Data for Update All Contact Data",
+                  "value": {
+                    "firstName": "new firstName",
+                    "lastName": "new lastName",
+                    "email": "new email@email.com",
+                    "phone": "new 1234567890"
+                  }
+                },
+                "Update First Name": {
+                  "description": "User Data for Update User firstName",
+                  "value": {
+                    "firstName": "new firstName",
+                    "lastName": "old lastName",
+                    "email": "old email@email.com",
+                    "phone": "old 1234567890"
+                  }
+                },
+                "Update Last Name": {
+                  "description": "User Data for Update User lastName",
+                  "value": {
+                    "firstName": "old firstName",
+                    "lastName": "new lastName",
+                    "email": "old email@email.com",
+                    "phone": "old 1234567890"
+                  }
+                },
+                "Update Phone": {
+                  "description": "User Data for Update User Phone",
+                  "value": {
+                    "firstName": "old firstName",
+                    "lastName": "old lastName",
+                    "email": "old email@email.com",
+                    "phone": "new 1234567890"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contactRes"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success Add device",
+                    "value": {
+                      "message": "User Created",
+                      "data": {
+                        "id": "random string for id contact",
+                        "firstName": "firstName",
+                        "lastName": "lastName",
+                        "email": "email@email.com",
+                        "phone": "1234567890"
+                      },
+                      "meta": {
+                        "location": "https://api/v1/user/1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
                   }
                 }
               }
@@ -1393,7 +1419,18 @@
       "contactReq": {
         "type": "object",
         "additionalProperties": false,
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "phone"
+        ],
         "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 500,
+            "pattern": "[\\n\\s\\w\\W^$]"
+          },
           "firstName": {
             "type": "string",
             "maxLength": 500,
