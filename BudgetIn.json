@@ -1308,6 +1308,595 @@
           }
         }
       }
+    },
+    "/addresses": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Address Management"
+        ],
+        "summary": "Add User Address",
+        "description": "Endpoint for Add User Address",
+        "requestBody": {
+          "description": "User Address Data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contactReq"
+              },
+              "examples": {
+                "Add Address": {
+                  "description": "User Data for Add User Address",
+                  "value": {
+                    "firstName": "firstName",
+                    "lastName": "lastName",
+                    "email": "email@email.com",
+                    "phone": "1234567890"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contactRes"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success Add device",
+                    "value": {
+                      "message": "User Created",
+                      "data": {
+                        "id": "random string for id contact",
+                        "firstName": "firstName",
+                        "lastName": "lastName",
+                        "email": "email@email.com",
+                        "phone": "1234567890"
+                      },
+                      "meta": {
+                        "location": "https://api/v1/user/1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Address Management"
+        ],
+        "summary": "Search Address",
+        "description": "Endpoint for Search Address",
+        "requestBody": {
+          "description": "Search User Address Data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contactReq"
+              },
+              "examples": {
+                "Add Address": {
+                  "description": "User Data for Search User Address",
+                  "value": {
+                    "name": "firstName or/and lastname",
+                    "email": "email@email.com",
+                    "phone": "1234567890"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contactRes"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/addresses/{address_id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Address Management"
+        ],
+        "summary": "Get Address Data",
+        "description": "Endpoint for show Address Data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/address_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contactRes"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Address Management"
+        ],
+        "summary": "Update User Address",
+        "description": "Endpoint for Update User Address",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/address_id"
+          }
+        ],
+        "requestBody": {
+          "description": "User Address Data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contactReq"
+              },
+              "examples": {
+                "Update Email": {
+                  "description": "User Data for Update User Address",
+                  "value": {
+                    "firstName": "old firstName",
+                    "lastName": "old lastName",
+                    "email": "new email@email.com",
+                    "phone": "old 1234567890"
+                  }
+                },
+                "Update All Contact Data": {
+                  "description": "User Data for Update All Contact Data",
+                  "value": {
+                    "firstName": "new firstName",
+                    "lastName": "new lastName",
+                    "email": "new email@email.com",
+                    "phone": "new 1234567890"
+                  }
+                },
+                "Update First Name": {
+                  "description": "User Data for Update User firstName",
+                  "value": {
+                    "firstName": "new firstName",
+                    "lastName": "old lastName",
+                    "email": "old email@email.com",
+                    "phone": "old 1234567890"
+                  }
+                },
+                "Update Last Name": {
+                  "description": "User Data for Update User lastName",
+                  "value": {
+                    "firstName": "old firstName",
+                    "lastName": "new lastName",
+                    "email": "old email@email.com",
+                    "phone": "old 1234567890"
+                  }
+                },
+                "Update Phone": {
+                  "description": "User Data for Update User Phone",
+                  "value": {
+                    "firstName": "old firstName",
+                    "lastName": "old lastName",
+                    "email": "old email@email.com",
+                    "phone": "new 1234567890"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contactRes"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success Add device",
+                    "value": {
+                      "message": "User Created",
+                      "data": {
+                        "id": "random string for id contact",
+                        "firstName": "firstName",
+                        "lastName": "lastName",
+                        "email": "email@email.com",
+                        "phone": "1234567890"
+                      },
+                      "meta": {
+                        "location": "https://api/v1/user/1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Address Management"
+        ],
+        "summary": "Delete Address Data",
+        "description": "Endpoint for delete Address Data",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1328,6 +1917,18 @@
         "name": "contact_id",
         "in": "path",
         "description": "Contact ID",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 100,
+          "pattern": "[\\n\\s\\w\\W^$]"
+        },
+        "example": "1"
+      },
+      "address_id": {
+        "name": "address_id",
+        "in": "path",
+        "description": "Address ID",
         "required": true,
         "schema": {
           "type": "string",
