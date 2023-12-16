@@ -294,21 +294,132 @@
           }
         }
       }
+    },
+    "/user/{user_id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "User Management"
+        ],
+        "summary": "User Login",
+        "description": "Endpoint for User Login",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/user_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "parameters": {
-      "device_id": {
-        "name": "device_id",
+      "user_id": {
+        "name": "user_id",
         "in": "path",
-        "description": "Device ID",
+        "description": "User ID",
         "required": true,
         "schema": {
           "type": "string",
           "maxLength": 100,
           "pattern": "[\\n\\s\\w\\W^$]"
         },
-        "example": "iphone-x"
+        "example": "1"
       }
     },
     "examples": {
