@@ -171,26 +171,118 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": false,
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "message": {
-                      "type": "string",
-                      "maxLength": 100,
-                      "pattern": "[\\n\\s\\w\\W^$]"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false
-                    },
-                    "meta": {
-                      "type": "object",
-                      "additionalProperties": false
-                    }
+                 "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "User Management"
+        ],
+        "summary": "User Login",
+        "description": "Endpoint for User Login",
+        "requestBody": {
+          "description": "ID dari device yang ingin ditambahkan.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              },
+              "examples": {
+                "example": {
+                  "description": "Login request body",
+                  "value": {
+                    "username": "example",
+                    "password": "Secret"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
                 },
                 "examples": {
                   "defaultResponse": {
@@ -221,8 +313,8 @@
     },
     "examples": {
       "defaultResponse": {
-        "description": "400 Bad Request",
-        "summary": "Device id already exists, choose another one",
+        "description": "Default User Response",
+        "summary": "Default User Response",
         "value": {
           "success": true,
           "message": "Success.",
@@ -232,36 +324,36 @@
       },
       "BadRequest": {
         "description": "400 Bad Request",
-        "summary": "Device id already exists, choose another one",
+        "summary": "Username id already exists, choose another one",
         "value": {
-          "message": "Error: Device id already exists, choose another one."
+          "message": "Error: username id already exists, choose another one."
         }
       },
       "Unauthorized": {
-        "description": "401 Missing API token.",
-        "summary": "API Token is missing/not provided",
+        "description": "401 Wrong username or password.",
+        "summary": "Wrong username or password",
         "value": {
-          "message": "Missing API token."
+          "message": "Wrong username or password"
         }
       },
       "Forbidden": {
-        "description": "403 Invalid API token.",
-        "summary": "API Token is invalid",
+        "description": "403 Forbidden",
+        "summary": "Forbidden",
         "value": {
-          "message": "Invalid API token."
+          "message": "Forbidden"
         }
       },
       "NotFound": {
         "description": "404 Not Found",
         "summary": "Not Found.",
         "value": {
-          "message": "Error: Device not found."
+          "message": "Error: not found."
         }
       }
     },
     "responses": {},
     "schemas": {
-      "register": {
+      "login": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -274,17 +366,56 @@
             "type": "string",
             "maxLength": 500,
             "pattern": "[\\n\\s\\w\\W^$]"
-          },
-          "name": {
+          }
+        }
+      },
+      "register": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "username": {
             "type": "string",
             "maxLength": 500,
             "pattern": "[\\n\\s\\w\\W^$]"
+          },
+          "password": {
+            "type": "string",
+            "pattern": "[\\n\\s\\w\\W^$]",
+            "maxLength": 500
+          },
+          "name": {
+            "type": "string",
+            "pattern": "[\\n\\s\\w\\W^$]",
+            "maxLength": 500
+          }
+        }
+      },
+      "defaultUserSchema": {
+        "type": "object",
+        "required": ["data"],
+        "additionalProperties": false,
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "[\\n\\s\\w\\W^$]"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": false
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": false
           }
         }
       },
       "error": {
-        "additionalProperties": false,
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "message": {
             "type": "string",
