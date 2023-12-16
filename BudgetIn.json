@@ -1,0 +1,306 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "0.0.1-alpha",
+    "title": "Spring Boot API",
+    "description": "Spring Boot Restful API",
+    "contact": {
+      "name": "IDScript",
+      "email": "spring@idscript.com",
+      "url": "https://spring.idscript.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://spring.idscript.com/LICENSE.md"
+    }
+  },
+  "servers": [
+    {
+      "description": "Spring Boot Restful API",
+      "url": "https://spring.idscript.com/{environment}/v1",
+      "variables": {
+        "environment": {
+          "description": "Server Environment",
+          "default": "api",
+          "enum": [
+            "dev",
+            "test",
+            "api"
+          ]
+        }
+      }
+    }
+  ],
+  "externalDocs": {
+    "description": "Find out more about WhatsAPI",
+    "url": "https://spring.idscript.com/docs"
+  },
+  "paths": {
+    "/register": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "User Management"
+        ],
+        "summary": "User Registration",
+        "description": "Endpoint for user rehistration",
+        "requestBody": {
+          "description": "User Data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/register"
+              },
+              "examples": {
+                "example": {
+                  "description": "User Data for registeration",
+                  "value": {
+                    "name": "example name",
+                    "username": "example",
+                    "password": "Secret"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "maxLength": 100,
+                      "pattern": "[\\n\\s\\w\\W^$]"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "token": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        },
+                        "name": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        },
+                        "username": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "location": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "pattern": "[\\n\\s\\w\\W^$]"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "description": "Success Add device",
+                    "value": {
+                      "message": "User Created",
+                      "data": {
+                        "token": "jncksdc7bdjb6r7ausvb",
+                        "name": "example name",
+                        "username": "example"
+                      },
+                      "meta": {
+                        "location": "https://api/v1/user/1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string",
+                      "maxLength": 100,
+                      "pattern": "[\\n\\s\\w\\W^$]"
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "device_id": {
+        "name": "device_id",
+        "in": "path",
+        "description": "Device ID",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 100,
+          "pattern": "[\\n\\s\\w\\W^$]"
+        },
+        "example": "iphone-x"
+      }
+    },
+    "examples": {
+      "defaultResponse": {
+        "description": "400 Bad Request",
+        "summary": "Device id already exists, choose another one",
+        "value": {
+          "success": true,
+          "message": "Success.",
+          "data": {},
+          "meta": {}
+        }
+      },
+      "BadRequest": {
+        "description": "400 Bad Request",
+        "summary": "Device id already exists, choose another one",
+        "value": {
+          "message": "Error: Device id already exists, choose another one."
+        }
+      },
+      "Unauthorized": {
+        "description": "401 Missing API token.",
+        "summary": "API Token is missing/not provided",
+        "value": {
+          "message": "Missing API token."
+        }
+      },
+      "Forbidden": {
+        "description": "403 Invalid API token.",
+        "summary": "API Token is invalid",
+        "value": {
+          "message": "Invalid API token."
+        }
+      },
+      "NotFound": {
+        "description": "404 Not Found",
+        "summary": "Not Found.",
+        "value": {
+          "message": "Error: Device not found."
+        }
+      }
+    },
+    "responses": {},
+    "schemas": {
+      "register": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 500,
+            "pattern": "[\\n\\s\\w\\W^$]"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 500,
+            "pattern": "[\\n\\s\\w\\W^$]"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 500,
+            "pattern": "[\\n\\s\\w\\W^$]"
+          }
+        }
+      },
+      "error": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "maxLength": 500,
+            "pattern": "[\\n\\s\\w\\W^$]"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Authentication with device id"
+      }
+    }
+  }
+}
