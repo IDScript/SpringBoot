@@ -166,7 +166,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                 "$ref": "#/components/schemas/defaultUserSchema"
+                  "$ref": "#/components/schemas/defaultUserSchema"
                 },
                 "examples": {
                   "defaultResponse": {
@@ -656,7 +656,6 @@
         "responses": {
           "204": {
             "description": "The resource was deleted successfully"
-            
           },
           "400": {
             "description": "Bad Request",
@@ -739,7 +738,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/contact"
+                "$ref": "#/components/schemas/contactReq"
               },
               "examples": {
                 "Add Contact": {
@@ -761,57 +760,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "maxLength": 100,
-                      "pattern": "[\\n\\s\\w\\W^$]"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        },
-                        "firstName": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        },
-                        "lastName": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        },
-                        "email": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        },
-                        "phone": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        }
-                      }
-                    },
-                    "meta": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "location": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/contactRes"
                 },
                 "examples": {
                   "success": {
@@ -869,7 +818,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                 "$ref": "#/components/schemas/defaultUserSchema"
+                  "$ref": "#/components/schemas/defaultUserSchema"
                 },
                 "examples": {
                   "defaultResponse": {
@@ -898,7 +847,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/contact"
+                "$ref": "#/components/schemas/contactReq"
               },
               "examples": {
                 "Update Email": {
@@ -951,62 +900,12 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Created",
+          "200": {
+            "description": "Updated",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "maxLength": 100,
-                      "pattern": "[\\n\\s\\w\\W^$]"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        },
-                        "firstName": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        },
-                        "lastName": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        },
-                        "email": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        },
-                        "phone": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        }
-                      }
-                    },
-                    "meta": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "location": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/contactRes"
                 },
                 "examples": {
                   "success": {
@@ -1064,7 +963,314 @@
             "content": {
               "application/json": {
                 "schema": {
-                 "$ref": "#/components/schemas/defaultUserSchema"
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Contact Management"
+        ],
+        "summary": "Contact List",
+        "description": "Endpoint for show Users List",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/contact_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacts/{contact_id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Contact Management"
+        ],
+        "summary": "Get Contact Data",
+        "description": "Endpoint for show Contact Data",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contactRes"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
+                },
+                "examples": {
+                  "defaultResponse": {
+                    "$ref": "#/components/examples/defaultResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Contact Management"
+        ],
+        "summary": "Delete Contact Data",
+        "description": "Endpoint for delete Contact Data",
+        "responses": {
+          "204": {
+            "description": "The resource was deleted successfully"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultUserSchema"
                 },
                 "examples": {
                   "defaultResponse": {
@@ -1084,6 +1290,18 @@
         "name": "user_id",
         "in": "path",
         "description": "User ID",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 100,
+          "pattern": "[\\n\\s\\w\\W^$]"
+        },
+        "example": "1"
+      },
+      "contact_id": {
+        "name": "contact_id",
+        "in": "path",
+        "description": "Contact ID",
         "required": true,
         "schema": {
           "type": "string",
@@ -1172,7 +1390,7 @@
           }
         }
       },
-      "contact": {
+      "contactReq": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -1200,7 +1418,9 @@
       },
       "defaultUserSchema": {
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "additionalProperties": false,
         "properties": {
           "success": {
@@ -1218,6 +1438,59 @@
           "meta": {
             "type": "object",
             "additionalProperties": false
+          }
+        }
+      },
+      "contactRes": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "[\\n\\s\\w\\W^$]"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "maxLength": 100,
+                "pattern": "[\\n\\s\\w\\W^$]"
+              },
+              "firstName": {
+                "type": "string",
+                "maxLength": 100,
+                "pattern": "[\\n\\s\\w\\W^$]"
+              },
+              "lastName": {
+                "type": "string",
+                "maxLength": 100,
+                "pattern": "[\\n\\s\\w\\W^$]"
+              },
+              "email": {
+                "type": "string",
+                "maxLength": 100,
+                "pattern": "[\\n\\s\\w\\W^$]"
+              },
+              "phone": {
+                "type": "string",
+                "maxLength": 100,
+                "pattern": "[\\n\\s\\w\\W^$]"
+              }
+            }
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "location": {
+                "type": "string",
+                "maxLength": 100,
+                "pattern": "[\\n\\s\\w\\W^$]"
+              }
+            }
           }
         }
       },
