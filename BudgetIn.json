@@ -52,139 +52,22 @@
           "User Management"
         ],
         "summary": "User Registration",
-        "description": "Endpoint for user rehistration",
+        "description": "Endpoint for user Registration",
         "requestBody": {
-          "description": "User Data",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/register"
-              },
-              "examples": {
-                "example": {
-                  "description": "User Data for registeration",
-                  "value": {
-                    "name": "example name",
-                    "username": "example",
-                    "password": "Secret"
-                  }
-                }
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/register"
         },
         "responses": {
           "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "maxLength": 100,
-                      "pattern": "[\\n\\s\\w\\W^$]"
-                    },
-                    "data": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "token": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        },
-                        "name": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        },
-                        "username": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        }
-                      }
-                    },
-                    "meta": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "location": {
-                          "type": "string",
-                          "maxLength": 100,
-                          "pattern": "[\\n\\s\\w\\W^$]"
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "success": {
-                    "description": "Success Add device",
-                    "value": {
-                      "message": "User Created",
-                      "data": {
-                        "token": "jncksdc7bdjb6r7ausvb",
-                        "name": "example name",
-                        "username": "example"
-                      },
-                      "meta": {
-                        "location": "https://api/v1/user/1"
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/201Default"
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       },
@@ -201,94 +84,22 @@
         "description": "Endpoint for show Users List",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "success": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/UserList"
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       }
@@ -312,94 +123,22 @@
         ],
         "responses": {
           "200": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "success": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200Default"
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       },
@@ -425,7 +164,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/login"
+                "$ref": "#/components/schemas/userUpdate"
               },
               "examples": {
                 "Update Name": {
@@ -453,94 +192,22 @@
         },
         "responses": {
           "200": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "success": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200UserDefault"
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       }
@@ -553,7 +220,7 @@
         "summary": "User Login",
         "description": "Endpoint for User Login",
         "requestBody": {
-          "description": "ID dari device yang ingin ditambahkan.",
+          "description": "User Data.",
           "required": true,
           "content": {
             "application/json": {
@@ -582,71 +249,26 @@
                 },
                 "examples": {
                   "success": {
-                    "$ref": "#/components/examples/defaultResponse"
+                    "$ref": "#/components/examples/defaultExample"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       }
@@ -668,64 +290,19 @@
             "description": "The resource was deleted successfully"
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       }
@@ -774,7 +351,7 @@
                 },
                 "examples": {
                   "success": {
-                    "description": "Success Add device",
+                    "description": "Success Add Contact",
                     "value": {
                       "message": "User Created",
                       "data": {
@@ -794,49 +371,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Default"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       },
@@ -882,86 +429,26 @@
                 },
                 "examples": {
                   "success": {
-                    "$ref": "#/components/examples/defaultResponse"
+                    "$ref": "#/components/examples/contactResponse"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       }
@@ -993,86 +480,26 @@
                 },
                 "examples": {
                   "success": {
-                    "$ref": "#/components/examples/defaultResponse"
+                    "$ref": "#/components/examples/contactResponse"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       },
@@ -1160,7 +587,7 @@
                 },
                 "examples": {
                   "success": {
-                    "description": "Success Add device",
+                    "description": "Success Update Contact",
                     "value": {
                       "message": "User Created",
                       "data": {
@@ -1180,49 +607,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Default"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       },
@@ -1247,79 +644,19 @@
             "description": "The resource was deleted successfully"
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       }
@@ -1347,16 +684,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/contactReq"
+                "$ref": "#/components/schemas/addressReq"
               },
               "examples": {
                 "Add Address": {
                   "description": "User Data for Add User Address",
                   "value": {
-                    "firstName": "firstName",
-                    "lastName": "lastName",
-                    "email": "email@email.com",
-                    "phone": "1234567890"
+                    "street": "Jalan apa",
+                    "city": "Kota mana",
+                    "country": "Negara",
+                    "province": "Provinsi",
+                    "postalCode": 112233
                   }
                 }
               }
@@ -1369,19 +707,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/contactRes"
+                  "$ref": "#/components/schemas/addressRes"
                 },
                 "examples": {
                   "success": {
-                    "description": "Success Add device",
+                    "description": "Success Add Address",
                     "value": {
                       "message": "User Created",
                       "data": {
                         "id": "random string for id contact",
-                        "firstName": "firstName",
-                        "lastName": "lastName",
-                        "email": "email@email.com",
-                        "phone": "1234567890"
+                        "street": "Jalan apa",
+                        "city": "Kota mana",
+                        "country": "Negara",
+                        "province": "Provinsi",
+                        "postalCode": 112233
                       },
                       "meta": {
                         "location": "https://api/v1/user/1"
@@ -1393,49 +732,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Default"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       },
@@ -1486,86 +795,26 @@
                 },
                 "examples": {
                   "success": {
-                    "$ref": "#/components/examples/defaultResponse"
+                    "$ref": "#/components/examples/contactResponse"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       }
@@ -1600,86 +849,26 @@
                 },
                 "examples": {
                   "success": {
-                    "$ref": "#/components/examples/defaultResponse"
+                    "$ref": "#/components/examples/contactResponse"
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       },
@@ -1770,7 +959,7 @@
                 },
                 "examples": {
                   "success": {
-                    "description": "Success Add device",
+                    "description": "Success Add Address",
                     "value": {
                       "message": "User Created",
                       "data": {
@@ -1790,49 +979,19 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Default"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       },
@@ -1860,668 +1019,19 @@
             "description": "The resource was deleted successfully"
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/400Default"
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401Default"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/403Default"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404Default"
           },
           "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/addresses": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "tags": [
-          "Address Management"
-        ],
-        "summary": "Add User Address",
-        "description": "Endpoint for Add User Address",
-        "requestBody": {
-          "description": "User Address Data",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/contactReq"
-              },
-              "examples": {
-                "Add Address": {
-                  "description": "User Data for Add User Address",
-                  "value": {
-                    "firstName": "firstName",
-                    "lastName": "lastName",
-                    "email": "email@email.com",
-                    "phone": "1234567890"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/contactRes"
-                },
-                "examples": {
-                  "success": {
-                    "description": "Success Add device",
-                    "value": {
-                      "message": "User Created",
-                      "data": {
-                        "id": "random string for id contact",
-                        "firstName": "firstName",
-                        "lastName": "lastName",
-                        "email": "email@email.com",
-                        "phone": "1234567890"
-                      },
-                      "meta": {
-                        "location": "https://api/v1/user/1"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "tags": [
-          "Address Management"
-        ],
-        "summary": "Search Address",
-        "description": "Endpoint for Search Address",
-        "requestBody": {
-          "description": "Search User Address Data",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/contactReq"
-              },
-              "examples": {
-                "Add Address": {
-                  "description": "User Data for Search User Address",
-                  "value": {
-                    "name": "firstName or/and lastname",
-                    "email": "email@email.com",
-                    "phone": "1234567890"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/contactRes"
-                },
-                "examples": {
-                  "success": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/addresses/{address_id}": {
-      "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "tags": [
-          "Address Management"
-        ],
-        "summary": "Get Address Data",
-        "description": "Endpoint for show Address Data",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/address_id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/contactRes"
-                },
-                "examples": {
-                  "success": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "tags": [
-          "Address Management"
-        ],
-        "summary": "Update User Address",
-        "description": "Endpoint for Update User Address",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/address_id"
-          }
-        ],
-        "requestBody": {
-          "description": "User Address Data",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/contactReq"
-              },
-              "examples": {
-                "Update Email": {
-                  "description": "User Data for Update User Address",
-                  "value": {
-                    "firstName": "old firstName",
-                    "lastName": "old lastName",
-                    "email": "new email@email.com",
-                    "phone": "old 1234567890"
-                  }
-                },
-                "Update All Contact Data": {
-                  "description": "User Data for Update All Contact Data",
-                  "value": {
-                    "firstName": "new firstName",
-                    "lastName": "new lastName",
-                    "email": "new email@email.com",
-                    "phone": "new 1234567890"
-                  }
-                },
-                "Update First Name": {
-                  "description": "User Data for Update User firstName",
-                  "value": {
-                    "firstName": "new firstName",
-                    "lastName": "old lastName",
-                    "email": "old email@email.com",
-                    "phone": "old 1234567890"
-                  }
-                },
-                "Update Last Name": {
-                  "description": "User Data for Update User lastName",
-                  "value": {
-                    "firstName": "old firstName",
-                    "lastName": "new lastName",
-                    "email": "old email@email.com",
-                    "phone": "old 1234567890"
-                  }
-                },
-                "Update Phone": {
-                  "description": "User Data for Update User Phone",
-                  "value": {
-                    "firstName": "old firstName",
-                    "lastName": "old lastName",
-                    "email": "old email@email.com",
-                    "phone": "new 1234567890"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Updated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/contactRes"
-                },
-                "examples": {
-                  "success": {
-                    "description": "Success Add device",
-                    "value": {
-                      "message": "User Created",
-                      "data": {
-                        "id": "random string for id contact",
-                        "firstName": "firstName",
-                        "lastName": "lastName",
-                        "email": "email@email.com",
-                        "phone": "1234567890"
-                      },
-                      "meta": {
-                        "location": "https://api/v1/user/1"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "tags": [
-          "Address Management"
-        ],
-        "summary": "Delete Address Data",
-        "description": "Endpoint for delete Address Data",
-        "responses": {
-          "204": {
-            "description": "The resource was deleted successfully"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "BadRequest": {
-                    "$ref": "#/components/examples/BadRequest"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Unauthorized"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Unauthorized": {
-                    "$ref": "#/components/examples/Forbidden"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error"
-                },
-                "examples": {
-                  "Forbidden": {
-                    "$ref": "#/components/examples/NotFound"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/defaultUserSchema"
-                },
-                "examples": {
-                  "defaultResponse": {
-                    "$ref": "#/components/examples/defaultResponse"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/defaultAll"
           }
         }
       }
@@ -2535,11 +1045,9 @@
         "description": "User ID",
         "required": true,
         "schema": {
-          "type": "string",
-          "maxLength": 100,
-          "pattern": "[\\n\\s\\w\\W^$]"
+          "$ref": "#/components/schemas/defaultString"
         },
-        "example": "1"
+        "example": "user_id"
       },
       "contact_id": {
         "name": "contact_id",
@@ -2547,11 +1055,9 @@
         "description": "Contact ID",
         "required": true,
         "schema": {
-          "type": "string",
-          "maxLength": 100,
-          "pattern": "[\\n\\s\\w\\W^$]"
+          "$ref": "#/components/schemas/defaultString"
         },
-        "example": "1"
+        "example": "contact_id"
       },
       "address_id": {
         "name": "address_id",
@@ -2559,19 +1065,280 @@
         "description": "Address ID",
         "required": true,
         "schema": {
-          "type": "string",
-          "maxLength": 100,
-          "pattern": "[\\n\\s\\w\\W^$]"
+          "$ref": "#/components/schemas/defaultString"
         },
-        "example": "1"
+        "example": "address_id"
+      }
+    },
+    "requestBodies": {
+      "register": {
+        "description": "User Data",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "username": {
+                  "$ref": "#/components/schemas/defaultString"
+                },
+                "password": {
+                  "$ref": "#/components/schemas/defaultString"
+                },
+                "name": {
+                  "$ref": "#/components/schemas/defaultString"
+                }
+              }
+            },
+            "examples": {
+              "example": {
+                "description": "User Data for registeration",
+                "value": {
+                  "name": "example name",
+                  "username": "example",
+                  "password": "Secret"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "UserList": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "message": {
+                  "$ref": "#/components/schemas/defaultString"
+                },
+                "data": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "users": {
+                      "type": "array",
+                      "maxItems": 10,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": {
+                            "$ref": "#/components/schemas/defaultString"
+                          },
+                          "username": {
+                            "$ref": "#/components/schemas/defaultString"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "meta": {
+                  "type": "object",
+                  "additionalProperties": false
+                }
+              }
+            },
+            "examples": {
+              "success": {
+                "description": "Default User Response",
+                "summary": "Default User Response",
+                "value": {
+                  "message": "Success.",
+                  "data": {
+                    "users": [
+                      {
+                        "name": "example name",
+                        "username": "example"
+                      },
+                      {
+                        "name": "example name",
+                        "username": "example"
+                      },
+                      {
+                        "name": "example name",
+                        "username": "example"
+                      },
+                      {
+                        "name": "example name",
+                        "username": "example"
+                      }
+                    ]
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "200UserDefault": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/defaultUserSchema"
+            },
+            "examples": {
+              "success": {
+                "$ref": "#/components/examples/defaultExample"
+              }
+            }
+          }
+        }
+      },
+      "200Default": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/userRes"
+            },
+            "examples": {
+              "success": {
+                "$ref": "#/components/examples/userResponse"
+              }
+            }
+          }
+        }
+      },
+      "201Default": {
+        "description": "Created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/userRes"
+            },
+            "examples": {
+              "success": {
+                "$ref": "#/components/examples/userResponse"
+              }
+            }
+          }
+        }
+      },
+      "400Default": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "examples": {
+              "BadRequest": {
+                "$ref": "#/components/examples/BadRequest"
+              }
+            }
+          }
+        }
+      },
+      "401Default": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "examples": {
+              "success": {
+                "$ref": "#/components/examples/Unauthorized"
+              }
+            }
+          }
+        }
+      },
+      "403Default": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "examples": {
+              "success": {
+                "$ref": "#/components/examples/Forbidden"
+              }
+            }
+          }
+        }
+      },
+      "404Default": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            },
+            "examples": {
+              "success": {
+                "$ref": "#/components/examples/NotFound"
+              }
+            }
+          }
+        }
+      },
+      "defaultAll": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/userRes"
+            },
+            "examples": {
+              "success": {
+                "$ref": "#/components/examples/defaultExample"
+              }
+            }
+          }
+        }
       }
     },
     "examples": {
-      "defaultResponse": {
+      "userResponse": {
         "description": "Default User Response",
         "summary": "Default User Response",
         "value": {
-          "success": true,
+          "message": "OK",
+          "data": {
+            "token": "jncksdc7bdjb6r7ausvb",
+            "name": "example name",
+            "username": "example"
+          },
+          "meta": {
+            "location": "https://api/v1/user/1"
+          }
+        }
+      },
+      "contactResponse": {
+        "description": "Default Contact Response",
+        "summary": "Default Contact Response",
+        "value": {
+          "message": "Success.",
+          "data": {
+            "id": "random string for id contact",
+            "firstName": "firstName",
+            "lastName": "lastName",
+            "email": "email@email.com",
+            "phone": "1234567890"
+          },
+          "meta": {
+            "location": "http://api/contacts/1"
+          }
+        }
+      },
+      "defaultExample": {
+        "description": "Default User Response",
+        "summary": "Default User Response",
+        "value": {
           "message": "Success.",
           "data": {},
           "meta": {}
@@ -2579,69 +1346,82 @@
       },
       "BadRequest": {
         "description": "400 Bad Request",
-        "summary": "Username id already exists, choose another one",
+        "summary": "malformed request syntax, invalid request message framing, or deceptive request routing",
         "value": {
-          "message": "Error: username id already exists, choose another one."
+          "error": "Error: your request is invalid."
         }
       },
       "Unauthorized": {
-        "description": "401 Wrong username or password.",
+        "description": "401 Unauthorized",
         "summary": "Wrong username or password",
         "value": {
-          "message": "Wrong username or password"
+          "error": "Wrong username or password"
         }
       },
       "Forbidden": {
         "description": "403 Forbidden",
         "summary": "Forbidden",
         "value": {
-          "message": "Forbidden"
+          "error": "Forbidden"
         }
       },
       "NotFound": {
         "description": "404 Not Found",
         "summary": "Not Found.",
         "value": {
-          "message": "Error: not found."
+          "error": "Error: not found."
         }
       }
     },
-    "responses": {},
     "schemas": {
+      "userRes": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "$ref": "#/components/schemas/defaultString"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "token": {
+                "$ref": "#/components/schemas/defaultString"
+              },
+              "name": {
+                "$ref": "#/components/schemas/defaultString"
+              },
+              "username": {
+                "$ref": "#/components/schemas/defaultString"
+              }
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/meta"
+          }
+        }
+      },
       "login": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "username": {
-            "type": "string",
-            "maxLength": 500,
-            "pattern": "[\\n\\s\\w\\W^$]"
+            "$ref": "#/components/schemas/defaultString"
           },
           "password": {
-            "type": "string",
-            "maxLength": 500,
-            "pattern": "[\\n\\s\\w\\W^$]"
+            "$ref": "#/components/schemas/defaultString"
           }
         }
       },
-      "register": {
+      "userUpdate": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "username": {
-            "type": "string",
-            "maxLength": 500,
-            "pattern": "[\\n\\s\\w\\W^$]"
+          "name": {
+            "$ref": "#/components/schemas/defaultString"
           },
           "password": {
-            "type": "string",
-            "pattern": "[\\n\\s\\w\\W^$]",
-            "maxLength": 500
-          },
-          "name": {
-            "type": "string",
-            "pattern": "[\\n\\s\\w\\W^$]",
-            "maxLength": 500
+            "$ref": "#/components/schemas/defaultString"
           }
         }
       },
@@ -2654,29 +1434,43 @@
         ],
         "properties": {
           "name": {
-            "type": "string",
-            "maxLength": 500,
-            "pattern": "[\\n\\s\\w\\W^$]"
+            "$ref": "#/components/schemas/defaultString"
           },
           "firstName": {
-            "type": "string",
-            "maxLength": 500,
-            "pattern": "[\\n\\s\\w\\W^$]"
+            "$ref": "#/components/schemas/defaultString"
           },
           "lastName": {
-            "type": "string",
-            "pattern": "[\\n\\s\\w\\W^$]",
-            "maxLength": 500
+            "$ref": "#/components/schemas/defaultString"
           },
           "email": {
-            "type": "string",
-            "pattern": "[\\n\\s\\w\\W^$]",
-            "maxLength": 500
+            "$ref": "#/components/schemas/defaultString"
           },
           "phone": {
-            "type": "string",
-            "pattern": "[\\n\\s\\w\\W^$]",
-            "maxLength": 500
+            "$ref": "#/components/schemas/defaultString"
+          }
+        }
+      },
+      "addressReq": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "street": {
+            "$ref": "#/components/schemas/defaultString"
+          },
+          "city": {
+            "$ref": "#/components/schemas/defaultString"
+          },
+          "country": {
+            "$ref": "#/components/schemas/defaultString"
+          },
+          "province": {
+            "$ref": "#/components/schemas/defaultString"
+          },
+          "postalCode": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 999999,
+            "format": "int32"
           }
         }
       },
@@ -2691,9 +1485,7 @@
             "type": "boolean"
           },
           "message": {
-            "type": "string",
-            "maxLength": 100,
-            "pattern": "[\\n\\s\\w\\W^$]"
+            "$ref": "#/components/schemas/defaultString"
           },
           "data": {
             "type": "object",
@@ -2710,38 +1502,26 @@
         "additionalProperties": false,
         "properties": {
           "message": {
-            "type": "string",
-            "maxLength": 100,
-            "pattern": "[\\n\\s\\w\\W^$]"
+            "$ref": "#/components/schemas/defaultString"
           },
           "data": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "id": {
-                "type": "string",
-                "maxLength": 100,
-                "pattern": "[\\n\\s\\w\\W^$]"
+                "$ref": "#/components/schemas/defaultString"
               },
               "firstName": {
-                "type": "string",
-                "maxLength": 100,
-                "pattern": "[\\n\\s\\w\\W^$]"
+                "$ref": "#/components/schemas/defaultString"
               },
               "lastName": {
-                "type": "string",
-                "maxLength": 100,
-                "pattern": "[\\n\\s\\w\\W^$]"
+                "$ref": "#/components/schemas/defaultString"
               },
               "email": {
-                "type": "string",
-                "maxLength": 100,
-                "pattern": "[\\n\\s\\w\\W^$]"
+                "$ref": "#/components/schemas/defaultString"
               },
               "phone": {
-                "type": "string",
-                "maxLength": 100,
-                "pattern": "[\\n\\s\\w\\W^$]"
+                "$ref": "#/components/schemas/defaultString"
               }
             }
           },
@@ -2750,11 +1530,68 @@
             "additionalProperties": false,
             "properties": {
               "location": {
-                "type": "string",
-                "maxLength": 100,
-                "pattern": "[\\n\\s\\w\\W^$]"
+                "$ref": "#/components/schemas/defaultString"
               }
             }
+          }
+        }
+      },
+      "addressRes": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "$ref": "#/components/schemas/defaultString"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/defaultString"
+              },
+              "street": {
+                "$ref": "#/components/schemas/defaultString"
+              },
+              "city": {
+                "$ref": "#/components/schemas/defaultString"
+              },
+              "country": {
+                "$ref": "#/components/schemas/defaultString"
+              },
+              "province": {
+                "$ref": "#/components/schemas/defaultString"
+              },
+              "postalCode": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 999999,
+                "format": "int32"
+              }
+            }
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "location": {
+                "$ref": "#/components/schemas/defaultString"
+              }
+            }
+          }
+        }
+      },
+      "defaultString": {
+        "pattern": "[\\n\\s\\w\\W^$]",
+        "maxLength": 100,
+        "type": "string"
+      },
+      "meta": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "location": {
+            "$ref": "#/components/schemas/defaultString"
           }
         }
       },
@@ -2762,10 +1599,8 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "message": {
-            "type": "string",
-            "maxLength": 500,
-            "pattern": "[\\n\\s\\w\\W^$]"
+          "error": {
+            "$ref": "#/components/schemas/defaultString"
           }
         }
       }
