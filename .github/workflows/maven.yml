@@ -13,6 +13,7 @@ jobs:
       MYSQL_DB_USERNAME: root
       MYSQL_DB_PASSWORD: root
       MYSQL_DB_NAME: budgetin
+      MYSQL_DB_HOST: localhost:3306
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -21,10 +22,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Set DB Connection
-      run: |
-        mv .env.example .env
-        export $(cat .env)
     - name: Start MySQL
       run: |
         sudo /etc/init.d/mysql start
