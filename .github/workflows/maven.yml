@@ -23,6 +23,7 @@ jobs:
         export MYSQL_DB_PASSWORD=${{ secrets.MYSQL_DB_PASSWORD }}
         export MYSQL_DB_HOST=${{ secrets.MYSQL_DB_HOST }}
         export MYSQL_DB_NAME=${{ secrets.MYSQL_DB_NAME }}
+        echo $MYSQL_DB_NAME
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Update dependency graph
