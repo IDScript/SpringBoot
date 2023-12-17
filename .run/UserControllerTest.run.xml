@@ -1,0 +1,24 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="UserControllerTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+    <module name="budgetin" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.kanggara.budgetin.controllers.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="com.kanggara.budgetin.controllers" />
+    <option name="MAIN_CLASS_NAME" value="com.kanggara.budgetin.controllers.UserControllerTest" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="class" />
+    <envs>
+      <env name="MYSQL_DB_USERNAME" value="root" />
+      <env name="MYSQL_DB_PASSWORD" value="" />
+      <env name="MYSQL_DB_HOST" value="localhost:3306" />
+      <env name="MYSQL_DB_NAME" value="budgetin" />
+    </envs>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

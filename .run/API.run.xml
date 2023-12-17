@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="API" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="openjdk-20" />
+    <envs>
+      <env name="MYSQL_DB_USERNAME" value="root" />
+      <env name="MYSQL_DB_PASSWORD" value="" />
+      <env name="MYSQL_DB_HOST" value="localhost:3306" />
+      <env name="MYSQL_DB_NAME" value="budgetin" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="com.kanggara.budgetin.BudgetInApplication" />
+    <module name="budgetin" />
+    <option name="PASS_PARENT_ENVS" value="false" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
