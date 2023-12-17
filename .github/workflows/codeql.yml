@@ -23,6 +23,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    - name: Set db Connection
+      run: |
+        export MYSQL_DB_USERNAME=${{ secrets.MYSQL_DB_USERNAME }}
+        export MYSQL_DB_PASSWORD=${{ secrets.MYSQL_DB_PASSWORD }}
+        export MYSQL_DB_HOST=${{ secrets.MYSQL_DB_HOST }}
+        export MYSQL_DB_NAME=${{ secrets.MYSQL_DB_NAME }}
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
