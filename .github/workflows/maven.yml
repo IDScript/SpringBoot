@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      MYSQL_DB_USERNAME: root
+      MYSQL_DB_PASSWORD: root
+      MYSQL_DB_NAME: budgetin
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
