@@ -1,4 +1,4 @@
-name: 🔎 CodeQL
+name: 🔎 Java CodeQL
 
 on:
   push:
@@ -32,16 +32,16 @@ jobs:
       run: |
         sudo /etc/init.d/mysql start
         mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DB_NAME;" -u$MYSQL_DB_USERNAME -p$MYSQL_DB_PASSWORD
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: ${{ matrix.language }}
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
     - name: Perform CodeQL Analysis
