@@ -1,4 +1,4 @@
-name: "CodeQL"
+name: 🔎 CodeQL
 
 on:
   push:
@@ -12,6 +12,11 @@ jobs:
   analyze:
     name: Analyze
     runs-on: 'ubuntu-latest'
+    env:
+      MYSQL_DB_USERNAME: root
+      MYSQL_DB_PASSWORD: root
+      MYSQL_DB_NAME: budgetin
+      MYSQL_DB_HOST: localhost:3306
     permissions:
       actions: read
       contents: read
@@ -23,12 +28,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Set db Connection
+    - name: Start MySQL
       run: |
-        export MYSQL_DB_USERNAME=${{ secrets.MYSQL_DB_USERNAME }}
-        export MYSQL_DB_PASSWORD=${{ secrets.MYSQL_DB_PASSWORD }}
-        export MYSQL_DB_HOST=${{ secrets.MYSQL_DB_HOST }}
-        export MYSQL_DB_NAME=${{ secrets.MYSQL_DB_NAME }}
+        sudo /etc/init.d/mysql start
+        mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DB_NAME;" -u$MYSQL_DB_USERNAME -p$MYSQL_DB_PASSWORD
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
