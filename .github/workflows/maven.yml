@@ -17,13 +17,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Set db Connection
+    - name: Set DB Connection
       run: |
-        export MYSQL_DB_USERNAME=${{ secrets.MYSQL_DB_USERNAME }}
-        export MYSQL_DB_PASSWORD=${{ secrets.MYSQL_DB_PASSWORD }}
-        export MYSQL_DB_HOST=${{ secrets.MYSQL_DB_HOST }}
-        export MYSQL_DB_NAME=${{ secrets.MYSQL_DB_NAME }}
-        echo $MYSQL_DB_NAME
+        mv .env.example .env
+        export $(cat .env)
+    - name: Start MySQL
+      run: |
+        sudo /etc/init.d/mysql start
+        mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DB_NAME;" -u$MYSQL_DB_USERNAME -p$MYSQL_DB_PASSWORD
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Update dependency graph
