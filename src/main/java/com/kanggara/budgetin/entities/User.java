@@ -1,4 +1,4 @@
-package com.kanggara.budgetin.models.entities;
+package com.kanggara.budgetin.entities;
 
 import java.util.List;
 
@@ -21,10 +21,13 @@ import lombok.Setter;
 public class User {
 
     @Id
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String name;
 
     @Column(unique = true)

@@ -1,4 +1,4 @@
-package com.kanggara.budgetin.models.entities;
+package com.kanggara.budgetin.entities;
 
 import java.util.List;
 
@@ -42,5 +42,4 @@ public class Contact {
 
     @OneToMany(mappedBy = "contact")
     private List<Address> addresses;
-
 }

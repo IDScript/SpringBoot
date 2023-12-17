@@ -1,4 +1,4 @@
-package com.kanggara.budgetin.models.entities;
+package com.kanggara.budgetin.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,6 +29,7 @@ public class Address {
 
     private String province;
 
+    @Column(nullable = false)
     private String country;
 
     @Column(name = "postal_code")
@@ -37,5 +38,4 @@ public class Address {
     @ManyToOne(optional = false)
     @JoinColumn(name = "contact_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_contact_id"))
     private Contact contact;
-
 }
