@@ -37,7 +37,7 @@ jobs:
       run: mvn clean test
 
   check_coverage:
-    needs: [job_3, unit_test]
+    needs: unit_test
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -120,7 +120,7 @@ jobs:
 
   job_3:
     name: Display results
-    needs: [job_2, unit_test]
+    needs: [job_2, build]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
