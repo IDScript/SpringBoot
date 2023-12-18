@@ -1,20 +1,23 @@
 # Spring Boot RestFul API
 
+[![Coverage](.github/badges/jacoco.svg)](https://github.com/IDScript/SpringBoot/tree/dev/.github/workflows/UnitTest.yml)
+
 Spring Boot Restful API
 
 ---
 title: Spring Boot API v0.0.1-alpha
 language_tabs:
-  - shell: Shell
-  - http: HTTP
-  - javascript: JavaScript
-  - ruby: Ruby
-  - python: Python
-  - php: PHP
-  - java: Java
-  - go: Go
+
+- shell: Shell
+- http: HTTP
+- javascript: JavaScript
+- ruby: Ruby
+- python: Python
+- php: PHP
+- java: Java
+- go: Go
 toc_footers:
-  - <a href="https://spring.idscript.com/docs">Find out more about WhatsAPI</a>
+- <a href="https://spring.idscript.com/docs">Find out more about WhatsAPI</a>
 includes: []
 search: true
 highlight_theme: darkula
@@ -32,17 +35,17 @@ Spring Boot Restful API
 
 Base URLs:
 
-* <a href="https://spring.idscript.com/{environment}/v1">https://spring.idscript.com/{environment}/v1</a>
+- <a href="https://spring.idscript.com/{environment}/v1">https://spring.idscript.com/{environment}/v1</a>
 
-    * **environment** - Server Environment Default: api
+  - **environment** - Server Environment Default: api
 
-        * dev
+    - dev
 
-        * test
+    - test
 
-        * api
+    - api
 
-Email: <a href="mailto:spring@idscript.com">IDScript</a> Web: <a href="https://spring.idscript.com">IDScript</a> 
+Email: <a href="mailto:spring@idscript.com">IDScript</a> Web: <a href="https://spring.idscript.com">IDScript</a>
 License: <a href="https://spring.idscript.com/LICENSE.md">MIT</a>
 
 # Authentication
@@ -3242,7 +3245,7 @@ To perform this operation, you must be authenticated by means of one of the foll
 bearerAuth
 </aside>
 
-## get__contacts_{contact_id}_addresses_{address_id}
+## get__contacts_{contact_id}*addresses*{address_id}
 
 > Code samples
 
@@ -3478,7 +3481,7 @@ To perform this operation, you must be authenticated by means of one of the foll
 bearerAuth
 </aside>
 
-## put__contacts_{contact_id}_addresses_{address_id}
+## put__contacts_{contact_id}*addresses*{address_id}
 
 > Code samples
 
@@ -3740,7 +3743,7 @@ To perform this operation, you must be authenticated by means of one of the foll
 bearerAuth
 </aside>
 
-## delete__contacts_{contact_id}_addresses_{address_id}
+## delete__contacts_{contact_id}*addresses*{address_id}
 
 > Code samples
 
