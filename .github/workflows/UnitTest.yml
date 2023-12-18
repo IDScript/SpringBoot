@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         java: [ '17', '21' ]
-    name: Java ${{ matrix.Java }} sample
+    name: Unit Test with ${{ matrix.Java }}
     env:
       MYSQL_DB_USERNAME: root
       MYSQL_DB_PASSWORD: root
@@ -41,7 +41,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    name: Java 21 sample
+    name: Test Coverage with
     env:
       MYSQL_DB_USERNAME: root
       MYSQL_DB_PASSWORD: root

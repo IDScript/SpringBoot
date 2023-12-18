@@ -2,6 +2,8 @@
 
 [![Coverage](.github/badges/jacoco.svg)](https://github.com/IDScript/SpringBoot/tree/dev/.github/workflows/UnitTest.yml)
 
+[![Coverage](.github/badges/branches.svg)](https://github.com/IDScript/SpringBoot/tree/dev/.github/workflows/UnitTest.yml)
+
 Spring Boot Restful API
 
 ---
