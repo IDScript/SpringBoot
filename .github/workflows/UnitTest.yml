@@ -120,7 +120,7 @@ jobs:
 
   job_3:
     name: Display results
-    needs: job_2
+    needs: [job_2, check_coverage]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
