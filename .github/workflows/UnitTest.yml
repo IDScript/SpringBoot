@@ -86,6 +86,7 @@ jobs:
         path: target/site/jacoco/
 
   job_1:
+    needs: unit_test
     name: Add 3 and 7
     runs-on: ubuntu-latest
     steps:
