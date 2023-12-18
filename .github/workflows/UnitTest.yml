@@ -120,7 +120,7 @@ jobs:
 
   job_3:
     name: Display results
-    needs: job_2
+    needs: [job_2, unit_test]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
@@ -134,7 +134,7 @@ jobs:
           echo The result is $value
 
   build:
-    needs: [job_3, check_coverage, unit_test]
+    needs: [check_coverage, unit_test]
     runs-on: ubuntu-latest
     if: ${{ (contains(github.event.head_commit.message, '#war') || contains(github.event.head_commit.message, '#build')) && github.ref == 'refs/heads/main'}}
     env:
