@@ -37,7 +37,7 @@ jobs:
       run: mvn clean test
 
   check_coverage:
-    needs: unit_test
+    needs: [job_3, check_coverage]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -80,7 +80,7 @@ jobs:
           git push
         fi
     - name: Upload JaCoCo coverage report
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4.0.0
       with:
         name: jacoco-report
         path: target/site/jacoco/
@@ -94,7 +94,7 @@ jobs:
         run: |
           expr 3 + 7 > math-homework.txt
       - name: Upload math result for job 1
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: homework
           path: math-homework.txt
@@ -105,7 +105,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Download math result for job 1
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.0.0
         with:
           name: homework
       - shell: bash
@@ -113,18 +113,18 @@ jobs:
           value=`cat math-homework.txt`
           expr $value \* 9 > math-homework.txt
       - name: Upload math result for job 2
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: homework
           path: math-homework.txt
 
   job_3:
     name: Display results
-    needs: [job_2, check_coverage]
+    needs: job_2
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.0.0
         with:
           name: homework
       - name: Print the final result
@@ -134,7 +134,7 @@ jobs:
           echo The result is $value
 
   build:
-    needs: unit_test
+    needs: [job_3, check_coverage, unit_test]
     runs-on: ubuntu-latest
     if: ${{ (contains(github.event.head_commit.message, '#war') || contains(github.event.head_commit.message, '#build')) && github.ref == 'refs/heads/main'}}
     env:
