@@ -134,7 +134,7 @@ jobs:
           echo The result is $value
 
   build:
-    needs: [job_3, unit_test]
+    needs: [job_3, check_coverage]
     runs-on: ubuntu-latest
     if: ${{ (contains(github.event.head_commit.message, '#war') || contains(github.event.head_commit.message, '#build')) && github.ref == 'refs/heads/main'}}
     env:
