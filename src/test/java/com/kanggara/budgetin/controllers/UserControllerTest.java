@@ -94,7 +94,6 @@ class UserControllerTest {
 	@Test
 	void testRegisterBadRequest1() throws Exception {
 		RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-		registerUserRequest.setName("Test OK");
 
 		mockMvc.perform(
 				post("/api/users")
@@ -115,8 +114,8 @@ class UserControllerTest {
 	@Test
 	void testRegisterBadRequest2() throws Exception {
 		RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-		registerUserRequest.setPassword("secrets");
 		registerUserRequest.setUsername("test");
+		registerUserRequest.setPassword("secrets");
 
 		mockMvc.perform(
 				post("/api/users")
@@ -137,8 +136,8 @@ class UserControllerTest {
 	@Test
 	void testRegisterBadRequest3() throws Exception {
 		RegisterUserRequest registerUserRequest = new RegisterUserRequest();
+		registerUserRequest.setName("test");
 		registerUserRequest.setPassword("secrets");
-		registerUserRequest.setUsername("test");
 
 		mockMvc.perform(
 				post("/api/users")
