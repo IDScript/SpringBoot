@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
     @Column(nullable = false)
@@ -37,5 +37,5 @@ public class User {
     private Long tokenExpiriedAt;
 
     @OneToMany(mappedBy = "user")
-    private List<Contact> contacts;
+    private List<ContactEntity> contacts;
 }

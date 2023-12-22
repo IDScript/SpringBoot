@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "addresses")
-public class Address {
+public class AddressEntity {
 
     @Id
     private String id;
@@ -37,5 +37,5 @@ public class Address {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "contact_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_contact_id"))
-    private Contact contact;
+    private ContactEntity contact;
 }

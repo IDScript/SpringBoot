@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "contacts")
-public class Contact {
+public class ContactEntity {
 
     @Id
     private String id;
@@ -38,8 +38,8 @@ public class Contact {
 
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username", foreignKey = @ForeignKey(name = "fk_user_contact"))
-    private User user;
+    private UserEntity user;
 
     @OneToMany(mappedBy = "contact")
-    private List<Address> addresses;
+    private List<AddressEntity> addresses;
 }

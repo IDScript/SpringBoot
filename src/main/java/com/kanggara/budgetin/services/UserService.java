@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.kanggara.budgetin.entities.User;
+import com.kanggara.budgetin.entities.UserEntity;
 import com.kanggara.budgetin.models.RegisterUserRequest;
 import com.kanggara.budgetin.repository.UserRepository;
 import com.kanggara.budgetin.security.BCrypt;
@@ -39,7 +39,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already registered");
         }
 
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setUsername(registerUserRequest.getUsername());
         user.setPassword(BCrypt.hashpw(registerUserRequest.getPassword(), BCrypt.gensalt()));
         user.setName(registerUserRequest.getName());

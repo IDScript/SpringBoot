@@ -15,7 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kanggara.budgetin.entities.User;
+import com.kanggara.budgetin.entities.UserEntity;
 import com.kanggara.budgetin.security.BCrypt;
 import com.kanggara.budgetin.models.WebResponse;
 import com.kanggara.budgetin.repository.UserRepository;
@@ -25,135 +25,135 @@ import com.kanggara.budgetin.models.RegisterUserRequest;
 @AutoConfigureMockMvc
 class UserControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+	@Autowired
+	private MockMvc mockMvc;
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+	@Autowired
+	private ObjectMapper objectMapper;
 
-    @BeforeEach
-    void setUp() {
-        userRepository.deleteAll();
-    }
+	@BeforeEach
+	void setUp() {
+		userRepository.deleteAll();
+	}
 
-    @Test
-    void testRegisterSuccess() throws Exception {
-        RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-        registerUserRequest.setName("Test OK");
-        registerUserRequest.setPassword("secrets");
-        registerUserRequest.setUsername("test");
+	@Test
+	void testRegisterSuccess() throws Exception {
+		RegisterUserRequest registerUserRequest = new RegisterUserRequest();
+		registerUserRequest.setName("Test OK");
+		registerUserRequest.setPassword("secrets");
+		registerUserRequest.setUsername("test");
 
-        mockMvc.perform(
-                post("/api/users")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(registerUserRequest)))
-                .andExpectAll(status().isOk()).andDo(result -> {
-                    WebResponse<String> response = objectMapper.readValue(
-                            result.getResponse().getContentAsString(),
-                            new TypeReference<>() {
-                            });
+		mockMvc.perform(
+				post("/api/users")
+						.accept(MediaType.APPLICATION_JSON)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(registerUserRequest)))
+				.andExpectAll(status().isOk()).andDo(result -> {
+					WebResponse<String> response = objectMapper.readValue(
+							result.getResponse().getContentAsString(),
+							new TypeReference<>() {
+							});
 
-                    assertEquals("OK", response.getData());
-                });
+					assertEquals("OK", response.getData());
+				});
 
-    }
+	}
 
-    @Test
-    void testRegisterDuplicate() throws Exception {
-        User user = new User();
-        user.setName("Test OK");
-        user.setPassword(BCrypt.hashpw("secrets", BCrypt.gensalt()));
-        user.setUsername("test");
-        userRepository.save(user);
+	@Test
+	void testRegisterDuplicate() throws Exception {
+		UserEntity user = new UserEntity();
+		user.setName("Test OK");
+		user.setPassword(BCrypt.hashpw("secrets", BCrypt.gensalt()));
+		user.setUsername("test");
+		userRepository.save(user);
 
-        RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-        registerUserRequest.setName("Test OK");
-        registerUserRequest.setPassword("secrets");
-        registerUserRequest.setUsername("test");
+		RegisterUserRequest registerUserRequest = new RegisterUserRequest();
+		registerUserRequest.setName("Test OK");
+		registerUserRequest.setPassword("secrets");
+		registerUserRequest.setUsername("test");
 
-        mockMvc.perform(
-                post("/api/users")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(registerUserRequest)))
-                .andExpectAll(status().isBadRequest()).andDo(result -> {
-                    WebResponse<String> response = objectMapper.readValue(
-                            result.getResponse().getContentAsString(),
-                            new TypeReference<>() {
-                            });
+		mockMvc.perform(
+				post("/api/users")
+						.accept(MediaType.APPLICATION_JSON)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(registerUserRequest)))
+				.andExpectAll(status().isBadRequest()).andDo(result -> {
+					WebResponse<String> response = objectMapper.readValue(
+							result.getResponse().getContentAsString(),
+							new TypeReference<>() {
+							});
 
-                    assertNotNull(response.getError());
-                });
+					assertNotNull(response.getError());
+				});
 
-    }
+	}
 
-    @Test
-    void testRegisterBadRequest1() throws Exception {
-        RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-        registerUserRequest.setName("Test OK");
+	@Test
+	void testRegisterBadRequest1() throws Exception {
+		RegisterUserRequest registerUserRequest = new RegisterUserRequest();
+		registerUserRequest.setName("Test OK");
 
-        mockMvc.perform(
-                post("/api/users")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(registerUserRequest)))
-                .andExpectAll(status().isBadRequest()).andDo(result -> {
-                    WebResponse<String> response = objectMapper.readValue(
-                            result.getResponse().getContentAsString(),
-                            new TypeReference<>() {
-                            });
+		mockMvc.perform(
+				post("/api/users")
+						.accept(MediaType.APPLICATION_JSON)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(registerUserRequest)))
+				.andExpectAll(status().isBadRequest()).andDo(result -> {
+					WebResponse<String> response = objectMapper.readValue(
+							result.getResponse().getContentAsString(),
+							new TypeReference<>() {
+							});
 
-                    assertNotNull(response.getError());
-                });
+					assertNotNull(response.getError());
+				});
 
-    }
+	}
 
-    @Test
-    void testRegisterBadRequest2() throws Exception {
-        RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-        registerUserRequest.setPassword("secrets");
-        registerUserRequest.setUsername("test");
+	@Test
+	void testRegisterBadRequest2() throws Exception {
+		RegisterUserRequest registerUserRequest = new RegisterUserRequest();
+		registerUserRequest.setPassword("secrets");
+		registerUserRequest.setUsername("test");
 
-        mockMvc.perform(
-                post("/api/users")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(registerUserRequest)))
-                .andExpectAll(status().isBadRequest()).andDo(result -> {
-                    WebResponse<String> response = objectMapper.readValue(
-                            result.getResponse().getContentAsString(),
-                            new TypeReference<>() {
-                            });
+		mockMvc.perform(
+				post("/api/users")
+						.accept(MediaType.APPLICATION_JSON)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(registerUserRequest)))
+				.andExpectAll(status().isBadRequest()).andDo(result -> {
+					WebResponse<String> response = objectMapper.readValue(
+							result.getResponse().getContentAsString(),
+							new TypeReference<>() {
+							});
 
-                    assertNotNull(response.getError());
-                });
+					assertNotNull(response.getError());
+				});
 
-    }
+	}
 
-    @Test
-    void testRegisterBadRequest3() throws Exception {
-        RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-        registerUserRequest.setPassword("secrets");
-        registerUserRequest.setUsername("test");
+	@Test
+	void testRegisterBadRequest3() throws Exception {
+		RegisterUserRequest registerUserRequest = new RegisterUserRequest();
+		registerUserRequest.setPassword("secrets");
+		registerUserRequest.setUsername("test");
 
-        mockMvc.perform(
-                post("/api/users")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(registerUserRequest)))
-                .andExpectAll(status().isBadRequest()).andDo(result -> {
-                    WebResponse<String> response = objectMapper.readValue(
-                            result.getResponse().getContentAsString(),
-                            new TypeReference<>() {
-                            });
+		mockMvc.perform(
+				post("/api/users")
+						.accept(MediaType.APPLICATION_JSON)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(registerUserRequest)))
+				.andExpectAll(status().isBadRequest()).andDo(result -> {
+					WebResponse<String> response = objectMapper.readValue(
+							result.getResponse().getContentAsString(),
+							new TypeReference<>() {
+							});
 
-                    assertNotNull(response.getError());
-                });
+					assertNotNull(response.getError());
+				});
 
-    }
+	}
 
 }
