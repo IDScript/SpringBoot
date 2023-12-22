@@ -20,22 +20,22 @@ import lombok.Setter;
 @Table(name = "users")
 public class UserEntity {
 
-    @Id
-    @Column(nullable = false)
-    private String username;
+	@Id
+	@Column(nullable = false)
+	private String username;
 
-    @Column(nullable = false)
-    private String password;
+	@Column(nullable = false)
+	private String password;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    @Column(unique = true)
-    private String token;
+	@Column(unique = true)
+	private String token;
 
-    @Column(name = "token_expiried_at")
-    private Long tokenExpiriedAt;
+	@Column(name = "token_expiried_at")
+	private Long tokenExpiriedAt;
 
-    @OneToMany(mappedBy = "user")
-    private List<ContactEntity> contacts;
+	@OneToMany(mappedBy = "user")
+	private List<ContactEntity> contacts;
 }

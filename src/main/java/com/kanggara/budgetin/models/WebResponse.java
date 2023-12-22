@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class WebResponse<T> {
-    private T data;
+	private T data;
 
-    private String error;
+	private String error;
 }

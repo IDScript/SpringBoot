@@ -18,32 +18,32 @@ import java.util.Set;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+	private final UserRepository userRepository;
 
-    private final Validator validator;
+	private final Validator validator;
 
-    public UserService(Validator validator, UserRepository userRepository) {
-        this.validator = validator;
-        this.userRepository = userRepository;
-    }
+	public UserService(Validator validator, UserRepository userRepository) {
+		this.validator = validator;
+		this.userRepository = userRepository;
+	}
 
-    @Transactional
-    public void register(RegisterUserRequest registerUserRequest) {
-        Set<ConstraintViolation<RegisterUserRequest>> constraintViolations = validator.validate(registerUserRequest);
+	@Transactional
+	public void register(RegisterUserRequest registerUserRequest) {
+		Set<ConstraintViolation<RegisterUserRequest>> constraintViolations = validator.validate(registerUserRequest);
 
-        if (!constraintViolations.isEmpty()) {
-            throw new ConstraintViolationException(constraintViolations);
-        }
+		if (!constraintViolations.isEmpty()) {
+			throw new ConstraintViolationException(constraintViolations);
+		}
 
-        if (userRepository.existsById(registerUserRequest.getUsername())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already registered");
-        }
+		if (userRepository.existsById(registerUserRequest.getUsername())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already registered");
+		}
 
-        UserEntity user = new UserEntity();
-        user.setUsername(registerUserRequest.getUsername());
-        user.setPassword(BCrypt.hashpw(registerUserRequest.getPassword(), BCrypt.gensalt()));
-        user.setName(registerUserRequest.getName());
+		UserEntity user = new UserEntity();
+		user.setUsername(registerUserRequest.getUsername());
+		user.setPassword(BCrypt.hashpw(registerUserRequest.getPassword(), BCrypt.gensalt()));
+		user.setName(registerUserRequest.getName());
 
-        userRepository.save(user);
-    }
+		userRepository.save(user);
+	}
 }

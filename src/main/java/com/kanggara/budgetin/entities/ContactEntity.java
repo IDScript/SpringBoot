@@ -23,23 +23,23 @@ import lombok.Setter;
 @Table(name = "contacts")
 public class ContactEntity {
 
-    @Id
-    private String id;
+	@Id
+	private String id;
 
-    @Column(name = "first_name")
-    private String firstName;
+	@Column(name = "first_name")
+	private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+	@Column(name = "last_name")
+	private String lastName;
 
-    private String email;
+	private String email;
 
-    private String phone;
+	private String phone;
 
-    @ManyToOne
-    @JoinColumn(name = "username", referencedColumnName = "username", foreignKey = @ForeignKey(name = "fk_user_contact"))
-    private UserEntity user;
+	@ManyToOne
+	@JoinColumn(name = "username", referencedColumnName = "username", foreignKey = @ForeignKey(name = "fk_user_contact"))
+	private UserEntity user;
 
-    @OneToMany(mappedBy = "contact")
-    private List<AddressEntity> addresses;
+	@OneToMany(mappedBy = "contact")
+	private List<AddressEntity> addresses;
 }

@@ -20,22 +20,22 @@ import lombok.Setter;
 @Table(name = "addresses")
 public class AddressEntity {
 
-    @Id
-    private String id;
+	@Id
+	private String id;
 
-    private String street;
+	private String street;
 
-    private String city;
+	private String city;
 
-    private String province;
+	private String province;
 
-    @Column(nullable = false)
-    private String country;
+	@Column(nullable = false)
+	private String country;
 
-    @Column(name = "postal_code")
-    private String postalCode;
+	@Column(name = "postal_code")
+	private String postalCode;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "contact_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_contact_id"))
-    private ContactEntity contact;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "contact_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_contact_id"))
+	private ContactEntity contact;
 }
