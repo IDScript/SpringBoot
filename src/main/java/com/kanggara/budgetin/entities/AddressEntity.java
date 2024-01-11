@@ -1,22 +1,23 @@
 package com.kanggara.budgetin.entities;
 
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.JoinColumn;
 
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "addresses")
 public class AddressEntity {
 
@@ -36,6 +37,6 @@ public class AddressEntity {
 	private String postalCode;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "contact_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_contact_id"))
+	@JoinColumn(name = "contact_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_contact_address"))
 	private ContactEntity contact;
 }
