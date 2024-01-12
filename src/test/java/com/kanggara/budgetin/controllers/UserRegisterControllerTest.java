@@ -2,8 +2,8 @@ package com.kanggara.budgetin.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ import com.kanggara.budgetin.models.RegisterUserRequest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserControllerTest {
+class UserRegisterControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
