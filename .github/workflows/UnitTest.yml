@@ -17,10 +17,10 @@ jobs:
         java: [ '17', '21' ]
     name: Unit Test with Java ${{ matrix.Java }}
     env:
-      MYSQL_DB_USERNAME: root
-      MYSQL_DB_PASSWORD: root
-      MYSQL_DB_NAME: budgetin
-      MYSQL_DB_HOST: localhost:3306
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_NAME: budgetin
+      DB_HOST: localhost:3306
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK ${{ matrix.java }}
@@ -32,7 +32,7 @@ jobs:
     - name: Start MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DB_NAME;" -u$MYSQL_DB_USERNAME -p$MYSQL_DB_PASSWORD
+        mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;" -u$DB_USERNAME -p$DB_PASSWORD
     - name: Build with Maven
       run: mvn clean test
 
@@ -44,10 +44,10 @@ jobs:
       pull-requests: write
     name: Code Coverage with Java 21 LTS
     env:
-      MYSQL_DB_USERNAME: root
-      MYSQL_DB_PASSWORD: root
-      MYSQL_DB_NAME: budgetin
-      MYSQL_DB_HOST: localhost:3306
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_NAME: budgetin
+      DB_HOST: localhost:3306
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 21
@@ -59,7 +59,7 @@ jobs:
     - name: Start MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DB_NAME;" -u$MYSQL_DB_USERNAME -p$MYSQL_DB_PASSWORD
+        mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;" -u$DB_USERNAME -p$DB_PASSWORD
     - name: Build with Maven
       run: mvn -B test
     - name: Generate JaCoCo Badge
@@ -132,7 +132,7 @@ jobs:
         run: |
           value=`cat math-homework.txt`
           echo The result is $value
-  
+
   job_4:
     name: Display final results
     needs: [job_2, check_coverage]
@@ -153,10 +153,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ (contains(github.event.head_commit.message, '#war') || contains(github.event.head_commit.message, '#build')) && github.ref == 'refs/heads/main'}}
     env:
-      MYSQL_DB_USERNAME: root
-      MYSQL_DB_PASSWORD: root
-      MYSQL_DB_NAME: budgetin
-      MYSQL_DB_HOST: localhost:3306
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_NAME: budgetin
+      DB_HOST: localhost:3306
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -168,7 +168,7 @@ jobs:
     - name: Start MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DB_NAME;" -u$MYSQL_DB_USERNAME -p$MYSQL_DB_PASSWORD
+        mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;" -u$DB_USERNAME -p$DB_PASSWORD
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Maven Dependency Tree Dependency Submission
