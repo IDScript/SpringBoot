@@ -1,13 +1,13 @@
 package com.kanggara.budgetin.controllers;
 
+import com.kanggara.budgetin.models.WebResponse;
+import com.kanggara.budgetin.services.UserService;
+import com.kanggara.budgetin.models.RegisterUserRequest;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.kanggara.budgetin.models.WebResponse;
-import com.kanggara.budgetin.services.UserService;
-import com.kanggara.budgetin.models.RegisterUserRequest;
 
 @RestController
 public class UserController {
