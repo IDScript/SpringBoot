@@ -16,7 +16,7 @@ sed "s/target\/.*/target\/${OUTPUT} \/${OUTPUT}/" Dockerfile > Dockerfile.txt
 sed "s/app\.war.*/${OUTPUT}\"\]/" Dockerfile.txt > Dockerfile
 rm Dockerfile.txt
 
-# # Build Docker image
+# Build Docker image
 docker container prune
 docker image prune
 docker build -t kanggara75/spring:${VER} .

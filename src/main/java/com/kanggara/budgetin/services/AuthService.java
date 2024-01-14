@@ -27,10 +27,10 @@ public class AuthService {
   @Transactional
   public TokenResponse login(LoginUserRequest request) {
     String username = request.getUsername();
-    validationService.validate(request);
+    String password = request.getUsername();
 
-    if (username != null) {
-
+    if (username != null && password != null) {
+      validationService.validate(request);
       UserEntity userEntity = userRepository.findById(username).orElseThrow(this::unauthorized);
       if (BCrypt.checkpw(request.getPassword(), userEntity.getPassword())) {
         userEntity.setToken(UUID.randomUUID().toString());
@@ -46,7 +46,7 @@ public class AuthService {
         throw unauthorized();
       }
     } else {
-      throw unauthorized();
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request");
     }
   }
 

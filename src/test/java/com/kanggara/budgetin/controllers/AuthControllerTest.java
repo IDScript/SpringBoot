@@ -43,28 +43,29 @@ class AuthControllerTest {
   }
 
   @Test
-  void loginFailUserNotFound() throws Exception{
+  void loginFailUserNotFound() throws Exception {
     LoginUserRequest loginUserRequest = new LoginUserRequest();
     loginUserRequest.setUsername("test");
     loginUserRequest.setPassword("rahasiaya");
     mockMvc.perform(
-      post("/api/login")
-      .accept(MediaType.APPLICATION_JSON)
-      .contentType(MediaType.APPLICATION_JSON)
-      .content(objectMapper.writeValueAsString(loginUserRequest))
-    ).andExpectAll(
-      status().isUnauthorized()
-    ).andDo(result -> {
-      WebResponse<String> response = objectMapper.readValue(
-        result.getResponse().getContentAsString(),
-        new TypeReference<>() {});
-        assertNotNull(response.getError());
-    });
+        post("/api/login")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(loginUserRequest)))
+        .andExpectAll(
+            status().isUnauthorized())
+        .andDo(result -> {
+          WebResponse<String> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNotNull(response.getError());
+        });
 
   }
 
   @Test
-  void loginFailWrongPass() throws Exception{
+  void loginFailWrongPass() throws Exception {
     UserEntity user = new UserEntity();
     user.setName("Test NOK");
     user.setPassword(BCrypt.hashpw("secrets", BCrypt.gensalt()));
@@ -75,20 +76,21 @@ class AuthControllerTest {
     loginUserRequest.setUsername("test");
     loginUserRequest.setPassword("salahya");
     mockMvc.perform(
-      post("/api/login")
-      .accept(MediaType.APPLICATION_JSON)
-      .contentType(MediaType.APPLICATION_JSON)
-      .content(objectMapper.writeValueAsString(loginUserRequest))
-    ).andExpectAll(status().isUnauthorized()).andDo(result -> {
-      WebResponse<String> response = objectMapper.readValue(
-        result.getResponse().getContentAsString(),
-        new TypeReference<>() {});
-        assertNotNull(response.getError());
-    });
+        post("/api/login")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(loginUserRequest)))
+        .andExpectAll(status().isUnauthorized()).andDo(result -> {
+          WebResponse<String> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNotNull(response.getError());
+        });
   }
 
   @Test
-  void loginFailWrongUser() throws Exception{
+  void loginFailWrongUser() throws Exception {
     UserEntity user = new UserEntity();
     user.setName("Test NOK");
     user.setPassword(BCrypt.hashpw("secrets", BCrypt.gensalt()));
@@ -99,21 +101,46 @@ class AuthControllerTest {
     loginUserRequest.setUsername("testya");
     loginUserRequest.setPassword("secrets");
     mockMvc.perform(
-      post("/api/login")
-      .accept(MediaType.APPLICATION_JSON)
-      .contentType(MediaType.APPLICATION_JSON)
-      .content(objectMapper.writeValueAsString(loginUserRequest))
-    ).andExpectAll(status().isUnauthorized()).andDo(result -> {
-      WebResponse<String> response = objectMapper.readValue(
-        result.getResponse().getContentAsString(),
-        new TypeReference<>() {});
-        assertNotNull(response.getError());
-    });
-
+        post("/api/login")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(loginUserRequest)))
+        .andExpectAll(status().isUnauthorized()).andDo(result -> {
+          WebResponse<String> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNotNull(response.getError());
+        });
   }
 
   @Test
-  void loginSuccess() throws Exception{
+  void loginFailNullUser() throws Exception {
+    UserEntity user = new UserEntity();
+    user.setName("Test NOK");
+    user.setPassword(BCrypt.hashpw("secrets", BCrypt.gensalt()));
+    user.setUsername("test");
+    userRepository.save(user);
+
+    LoginUserRequest loginUserRequest = new LoginUserRequest();
+    loginUserRequest.setUsername(null);
+    loginUserRequest.setPassword("secrets");
+    mockMvc.perform(
+        post("/api/login")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(loginUserRequest)))
+        .andExpectAll(status().isBadRequest()).andDo(result -> {
+          WebResponse<String> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNotNull(response.getError());
+        });
+  }
+
+  @Test
+  void loginSuccess() throws Exception {
     UserEntity user = new UserEntity();
     user.setName("Test OK");
     user.setPassword(BCrypt.hashpw("secrets", BCrypt.gensalt()));
@@ -124,23 +151,24 @@ class AuthControllerTest {
     loginUserRequest.setUsername("test");
     loginUserRequest.setPassword("secrets");
     mockMvc.perform(
-      post("/api/login")
-      .accept(MediaType.APPLICATION_JSON)
-      .contentType(MediaType.APPLICATION_JSON)
-      .content(objectMapper.writeValueAsString(loginUserRequest))
-    ).andExpectAll(status().isOk()).andDo(result -> {
-      WebResponse<TokenResponse> response = objectMapper.readValue(
-        result.getResponse().getContentAsString(),
-        new TypeReference<>() {});
-        assertNull(response.getError());
-        assertNotNull(response.getData().getToken());
-        assertNotNull(response.getData().getExpiredAt());
+        post("/api/login")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(loginUserRequest)))
+        .andExpectAll(status().isOk()).andDo(result -> {
+          WebResponse<TokenResponse> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNull(response.getError());
+          assertNotNull(response.getData().getToken());
+          assertNotNull(response.getData().getExpiredAt());
 
-        UserEntity  userEntity = userRepository.findById("test").orElse(null);
-        assertNotNull(userEntity);
-        assertEquals(userEntity.getToken(), response.getData().getToken());
-        assertEquals(userEntity.getTokenExpiriedAt(), response.getData().getExpiredAt());
-    });
+          UserEntity userEntity = userRepository.findById("test").orElse(null);
+          assertNotNull(userEntity);
+          assertEquals(userEntity.getToken(), response.getData().getToken());
+          assertEquals(userEntity.getTokenExpiriedAt(), response.getData().getExpiredAt());
+        });
 
   }
 }

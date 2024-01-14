@@ -64,6 +64,28 @@ class UserRegisterControllerTest {
   }
 
   @Test
+  void testRegisterUserNull() throws Exception {
+    RegisterUserRequest registerUserRequest = new RegisterUserRequest();
+    registerUserRequest.setName("Test OK");
+    registerUserRequest.setPassword("secrets");
+    registerUserRequest.setUsername(null);
+
+    mockMvc.perform(
+        post("/api/users")
+            .accept(APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(registerUserRequest)))
+        .andExpectAll(status().isBadRequest()).andDo(result -> {
+          WebResponse<String> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+
+          assertNotNull(response.getError());
+        });
+  }
+
+  @Test
   void testRegisterDuplicate() throws Exception {
     UserEntity user = new UserEntity();
     user.setName("Test OK");
