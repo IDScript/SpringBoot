@@ -8,10 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BudgetInApplicationTests {
 
-	@Test
-	void main() {
-		BudgetInApplication.main(new String[] {});
+  @Test
+  void main() {
+    BudgetInApplication.main(new String[] {});
 
-		assertTrue(true, "silly assertion to be compliant with Sonar");
-	}
+    assertTrue(true, "silly assertion to be compliant with Sonar");
+  }
 }

@@ -13,16 +13,16 @@ import jakarta.validation.ConstraintViolationException;
 @RestControllerAdvice
 public class ErrorController {
 
-	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<WebResponse<String>> constraintViolationsExecption(ConstraintViolationException exception) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(WebResponse.<String>builder().error(exception.getMessage()).data("").build());
-	}
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<WebResponse<String>> constraintViolationsExecption(ConstraintViolationException exception) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        .body(WebResponse.<String>builder().error(exception.getMessage()).build());
+  }
 
-	@ExceptionHandler(ResponseStatusException.class)
-	public ResponseEntity<WebResponse<String>> apiExecption(ResponseStatusException exception) {
-		return ResponseEntity.status(exception.getStatusCode())
-				.body(WebResponse.<String>builder().data("").error(exception.getReason()).build());
-	}
+  @ExceptionHandler(ResponseStatusException.class)
+  public ResponseEntity<WebResponse<String>> apiExecption(ResponseStatusException exception) {
+    return ResponseEntity.status(exception.getStatusCode())
+        .body(WebResponse.<String>builder().error(exception.getReason()).build());
+  }
 
 }

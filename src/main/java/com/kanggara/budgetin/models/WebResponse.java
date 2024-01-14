@@ -10,6 +10,6 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WebResponse<T> {
-	private T data;
-	private String error;
+  private T data;
+  private String error;
 }

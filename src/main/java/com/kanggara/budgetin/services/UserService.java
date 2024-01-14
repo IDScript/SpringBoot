@@ -14,28 +14,29 @@ import com.kanggara.budgetin.models.RegisterUserRequest;
 @Service
 public class UserService {
 
-	private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-	private final ValidationService validationService;
+  private final ValidationService validationService;
 
-	UserService(ValidationService validationService, UserRepository userRepository) {
-		this.validationService = validationService;
-		this.userRepository = userRepository;
-	}
+  UserService(ValidationService validationService, UserRepository userRepository) {
+    this.validationService = validationService;
+    this.userRepository = userRepository;
+  }
 
-	@Transactional
-	public void register(RegisterUserRequest registerUserRequest) {
-		validationService.validate(registerUserRequest);
+  @Transactional
+  public void register(RegisterUserRequest registerUserRequest) {
+    validationService.validate(registerUserRequest);
+    String username = registerUserRequest.getUsername();
 
-		if (userRepository.existsById(registerUserRequest.getUsername())) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already registered");
-		}
+    if (username != null && (userRepository.existsById(username))) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already registered");
+    }
 
-		UserEntity user = new UserEntity();
-		user.setUsername(registerUserRequest.getUsername());
-		user.setPassword(BCrypt.hashpw(registerUserRequest.getPassword(), BCrypt.gensalt()));
-		user.setName(registerUserRequest.getName());
+    UserEntity user = new UserEntity();
+    user.setUsername(registerUserRequest.getUsername());
+    user.setPassword(BCrypt.hashpw(registerUserRequest.getPassword(), BCrypt.gensalt()));
+    user.setName(registerUserRequest.getName());
 
-		userRepository.save(user);
-	}
+    userRepository.save(user);
+  }
 }

@@ -1,24 +1,24 @@
 {
-    "configurations": [
-        {
-            "type": "java",
-            "name": "Run Spring Boot",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "mainClass": "com.kanggara.budgetin.BudgetInApplication",
-            "projectName": "budgetin",
-            "args": "",
-            "envFile": "${workspaceFolder}/.env"
-        },
-        {
-            "type": "java",
-            "name": "UserControllerTest",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "mainClass": "com.kanggara.budgetin.controllers.UserControllerTest",
-            "projectName": "budgetin",
-            "args": "",
-            "envFile": "${workspaceFolder}/.env"
-        },
-    ]
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run Spring Boot",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.kanggara.budgetin.BudgetInApplication",
+      "projectName": "budgetin",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "UserControllerTest",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.kanggara.budgetin.controllers.UserControllerTest",
+      "projectName": "budgetin",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+  ]
 }
