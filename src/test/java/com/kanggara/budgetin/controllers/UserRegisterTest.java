@@ -25,7 +25,7 @@ import com.kanggara.budgetin.models.RegisterUserRequest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserRegisterControllerTest {
+class UserRegisterTest {
 
   @Autowired
   private MockMvc mockMvc;

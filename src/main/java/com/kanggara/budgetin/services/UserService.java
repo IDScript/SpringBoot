@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.kanggara.budgetin.security.BCrypt;
 import com.kanggara.budgetin.entities.UserEntity;
+import com.kanggara.budgetin.models.UserResponse;
 import com.kanggara.budgetin.repository.UserRepository;
 import com.kanggara.budgetin.models.RegisterUserRequest;
 
@@ -38,5 +39,9 @@ public class UserService {
     user.setName(registerUserRequest.getName());
 
     userRepository.save(user);
+  }
+
+  public UserResponse get(UserEntity userEntity){
+    return UserResponse.builder().username(userEntity.getUsername()).name(userEntity.getName()).build();
   }
 }

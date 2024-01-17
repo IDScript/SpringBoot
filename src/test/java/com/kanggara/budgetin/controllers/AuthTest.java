@@ -26,7 +26,7 @@ import com.kanggara.budgetin.repository.UserRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AuthControllerTest {
+class AuthTest {
 
   @Autowired
   private MockMvc mockMvc;
