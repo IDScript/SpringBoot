@@ -27,33 +27,36 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     this.userRepository = userRepository;
   }
 
-
   @Override
-  public boolean supportsParameter(@NonNull MethodParameter parameter){
+  public boolean supportsParameter(@NonNull MethodParameter parameter) {
     return UserEntity.class.equals(parameter.getParameterType());
   }
 
   @Override
-	public Object resolveArgument(@NonNull MethodParameter parameter, @Nullable ModelAndViewContainer mavContainer, @NonNull NativeWebRequest webRequest, @Nullable WebDataBinderFactory binderFactory) throws Exception {
+  @Nullable
+  public Object resolveArgument(
+      @NonNull MethodParameter parameter,
+      @Nullable ModelAndViewContainer mavContainer,
+      @NonNull NativeWebRequest webRequest,
+      @Nullable WebDataBinderFactory binderFactory) throws Exception {
     HttpServletRequest servletRequest = (HttpServletRequest) webRequest.getNativeRequest();
     String token = servletRequest.getHeader("X-API-TOKEN");
     log.info("TOKEN {}", token);
-    if(token == null){
+    if (token == null) {
       throw unauthorized();
     }
 
     UserEntity userEntity = userRepository.findByToken(token).orElseThrow(this::unauthorized);
     log.info("USER {}", userEntity);
     if (userEntity.getTokenExpiriedAt() < System.currentTimeMillis()) {
-      throw unauthorized();
-  }
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token Expiried");
+    }
 
     return userEntity;
   }
 
-  private ResponseStatusException unauthorized(){
-    return new  ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+  private ResponseStatusException unauthorized() {
+    return new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unautorized");
 
   }
 }
-

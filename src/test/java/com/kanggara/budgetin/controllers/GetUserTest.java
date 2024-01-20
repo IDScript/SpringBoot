@@ -1,6 +1,7 @@
 package com.kanggara.budgetin.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,12 +14,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
+import com.kanggara.budgetin.security.BCrypt;
 import com.kanggara.budgetin.models.WebResponse;
 import com.kanggara.budgetin.models.UserResponse;
 import com.kanggara.budgetin.entities.UserEntity;
+import com.kanggara.budgetin.repository.UserRepository;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.kanggara.budgetin.repository.UserRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -72,9 +75,9 @@ class GetUserTest {
     UserEntity userEntity = new UserEntity();
     userEntity.setName("test");
     userEntity.setUsername("test");
-    userEntity.setPassword("passwordpanjang");
+    userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
     userEntity.setToken("token");
-    userEntity.setTokenExpiriedAt(System.currentTimeMillis() + 3600);
+    userEntity.setTokenExpiriedAt(System.currentTimeMillis() + 36000);
     userRepository.save(userEntity);
 
     mockMvc.perform(
@@ -86,8 +89,8 @@ class GetUserTest {
               result.getResponse().getContentAsString(),
               new TypeReference<>() {
               });
-              assertNull(response.getError());
-              assertNotNull(response.getData());
+          assertNull(response.getError());
+          assertNotNull(response.getData());
         });
   }
 
@@ -96,11 +99,10 @@ class GetUserTest {
     UserEntity userEntity = new UserEntity();
     userEntity.setName("test");
     userEntity.setUsername("test");
-    userEntity.setPassword("passwordpanjang");
+    userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
     userEntity.setToken("token");
     userEntity.setTokenExpiriedAt(System.currentTimeMillis() - 3600);
     userRepository.save(userEntity);
-
 
     mockMvc.perform(
         get("/api/user")
@@ -112,6 +114,7 @@ class GetUserTest {
               new TypeReference<>() {
               });
           assertNotNull(response.getError());
+          assertEquals("Token Expiried", response.getError());
         });
   }
 }

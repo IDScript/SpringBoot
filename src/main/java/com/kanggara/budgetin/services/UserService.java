@@ -1,14 +1,17 @@
 package com.kanggara.budgetin.services;
 
-import org.springframework.transaction.annotation.Transactional;
+import java.util.Objects;
 
+import org.springframework.lang.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kanggara.budgetin.security.BCrypt;
 import com.kanggara.budgetin.entities.UserEntity;
 import com.kanggara.budgetin.models.UserResponse;
+import com.kanggara.budgetin.models.UpdateUserRequest;
 import com.kanggara.budgetin.repository.UserRepository;
 import com.kanggara.budgetin.models.RegisterUserRequest;
 
@@ -41,7 +44,31 @@ public class UserService {
     userRepository.save(user);
   }
 
-  public UserResponse get(UserEntity userEntity){
-    return UserResponse.builder().username(userEntity.getUsername()).name(userEntity.getName()).build();
+  public UserResponse get(UserEntity userEntity) {
+    return UserResponse.builder()
+        .username(userEntity.getUsername())
+        .name(userEntity.getName())
+        .build();
+  }
+
+  @Transactional
+  public UserResponse update(@NonNull UserEntity userEntity, @NonNull UpdateUserRequest updateUserRequest) {
+
+    validationService.validate(updateUserRequest);
+
+    if (Objects.nonNull(updateUserRequest.getName())) {
+      userEntity.setName(updateUserRequest.getName());
+    }
+
+    if (Objects.nonNull(updateUserRequest.getPassword())) {
+      userEntity.setPassword(BCrypt.hashpw(updateUserRequest.getPassword(), BCrypt.gensalt()));
+    }
+
+    userRepository.save(userEntity);
+
+    return UserResponse.builder()
+        .username(userEntity.getUsername())
+        .name(userEntity.getName())
+        .build();
   }
 }
