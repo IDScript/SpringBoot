@@ -12,4 +12,12 @@ import lombok.AllArgsConstructor;
 public class WebResponse<T> {
   private T data;
   private String error;
+
+  public T getData() {
+    return data;
+  }
+
+  public String getError() {
+    return error;
+  }
 }

@@ -1,9 +1,15 @@
-FROM openjdk:19-jdk-alpine3.16
+FROM maven:3.8.7-openjdk-18-slim AS build
 
 LABEL org.opencontainers.image.authors="KAnggara75"
 
-COPY .env .env
+COPY src /home/app/src
 
-COPY target/springApp-0.1.0-alpha0074.war /springApp-0.1.0-alpha0074.war
+COPY pom.xml /home/app
 
-ENTRYPOINT ["java","-jar","/springApp-0.1.0-alpha0074.war"]
+COPY .env.docker /home/app/.env
+
+RUN mvn -f /home/app/pom.xml clean package
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","/home/app/target/budgetin.jar"]

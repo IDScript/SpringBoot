@@ -27,10 +27,9 @@ public class UserController {
     return WebResponse.<String>builder().data("OK").build();
   }
 
-  @GetMapping(path = "/api/user", produces= MediaType.APPLICATION_JSON_VALUE)
-  public WebResponse<UserResponse> get(UserEntity userEntity){
+  @GetMapping(path = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
+  public WebResponse<UserResponse> get(UserEntity userEntity) {
     UserResponse userResponse = userService.get(userEntity);
     return WebResponse.<UserResponse>builder().data(userResponse).build();
-
   }
 }
