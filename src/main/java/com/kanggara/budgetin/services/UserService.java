@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.kanggara.budgetin.security.BCrypt;
 import com.kanggara.budgetin.entities.UserEntity;
 import com.kanggara.budgetin.models.UserResponse;
@@ -15,6 +17,7 @@ import com.kanggara.budgetin.models.UpdateUserRequest;
 import com.kanggara.budgetin.repository.UserRepository;
 import com.kanggara.budgetin.models.RegisterUserRequest;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -32,7 +35,9 @@ public class UserService {
     validationService.validate(registerUserRequest);
     String username = registerUserRequest.getUsername();
 
-    if (username == null || (userRepository.existsById(username))) {
+    log.info("User : {}", username);
+
+    if (userRepository.existsById(username)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already registered");
     }
 

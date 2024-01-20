@@ -9,11 +9,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
@@ -64,77 +66,15 @@ class UserRegisterTest {
   }
 
   @Test
-  void testRegisterUserNull() throws Exception {
-    RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-    registerUserRequest.setName("Test OK");
-    registerUserRequest.setPassword("secrets");
-    registerUserRequest.setUsername(null);
-
-    mockMvc.perform(
-        post("/api/users")
-            .accept(APPLICATION_JSON)
-            .contentType(APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(registerUserRequest)))
-        .andExpectAll(status().isBadRequest()).andDo(result -> {
-          WebResponse<String> response = objectMapper.readValue(
-              result.getResponse().getContentAsString(),
-              new TypeReference<>() {
-              });
-
-          assertNotNull(response.getError());
-        });
-  }
-
-  @Test
   void testRegisterDuplicate() throws Exception {
     UserEntity user = new UserEntity();
     user.setName("Test OK");
-    user.setPassword(BCrypt.hashpw("secrets", BCrypt.gensalt()));
     user.setUsername("test");
+    user.setPassword(BCrypt.hashpw("secrets", BCrypt.gensalt()));
     userRepository.save(user);
 
     RegisterUserRequest registerUserRequest = new RegisterUserRequest();
     registerUserRequest.setName("Test OK");
-    registerUserRequest.setPassword("secrets");
-    registerUserRequest.setUsername("test");
-
-    mockMvc.perform(
-        post("/api/users")
-            .accept(APPLICATION_JSON)
-            .contentType(APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(registerUserRequest)))
-        .andExpectAll(status().isBadRequest()).andDo(result -> {
-          WebResponse<String> response = objectMapper.readValue(
-              result.getResponse().getContentAsString(),
-              new TypeReference<>() {
-              });
-
-          assertNotNull(response.getError());
-        });
-  }
-
-  @Test
-  void testRegisterBadRequest1() throws Exception {
-    RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-
-    mockMvc.perform(
-        post("/api/users")
-            .accept(APPLICATION_JSON)
-            .contentType(APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(registerUserRequest)))
-        .andExpectAll(status().isBadRequest()).andDo(result -> {
-          WebResponse<String> response = objectMapper.readValue(
-              result.getResponse().getContentAsString(),
-              new TypeReference<>() {
-              });
-
-          assertNotNull(response.getError());
-        });
-  }
-
-  @Test
-  void testRegisterBadRequest2() throws Exception {
-    RegisterUserRequest registerUserRequest = new RegisterUserRequest();
     registerUserRequest.setUsername("test");
     registerUserRequest.setPassword("secrets");
 
@@ -153,11 +93,24 @@ class UserRegisterTest {
         });
   }
 
-  @Test
-  void testRegisterBadRequest3() throws Exception {
+  @ParameterizedTest
+  @CsvSource({
+      ",,",
+      ",,secrets",
+      ",test,",
+      ",test,secrets",
+      "nama,,",
+      "nama,test,",
+      "nama,,secrets",
+  })
+  void testRegisterBadRequest(
+      @Nullable String username,
+      @Nullable String name,
+      @Nullable String pass) throws Exception {
     RegisterUserRequest registerUserRequest = new RegisterUserRequest();
-    registerUserRequest.setName("test");
-    registerUserRequest.setPassword("secrets");
+    registerUserRequest.setUsername(username);
+    registerUserRequest.setPassword(pass);
+    registerUserRequest.setName(name);
 
     mockMvc.perform(
         post("/api/users")
@@ -173,5 +126,4 @@ class UserRegisterTest {
           assertNotNull(response.getError());
         });
   }
-
 }

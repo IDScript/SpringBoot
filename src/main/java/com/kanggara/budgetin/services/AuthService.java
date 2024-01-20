@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 import com.kanggara.budgetin.security.BCrypt;
 import com.kanggara.budgetin.entities.UserEntity;
@@ -14,6 +15,7 @@ import com.kanggara.budgetin.models.TokenResponse;
 import com.kanggara.budgetin.models.LoginUserRequest;
 import com.kanggara.budgetin.repository.UserRepository;
 
+@Slf4j
 @Service
 public class AuthService {
   private UserRepository userRepository;
@@ -27,7 +29,10 @@ public class AuthService {
   @Transactional
   public TokenResponse login(LoginUserRequest request) {
     String username = request.getUsername();
-    String password = request.getUsername();
+    String password = request.getPassword();
+
+    log.info("User : {}", username);
+    log.info("Pass : {}", password);
 
     if (username != null && password != null) {
       validationService.validate(request);
@@ -61,4 +66,11 @@ public class AuthService {
     return System.currentTimeMillis() + (1000 * 60 * 24 * 30);
   }
 
+  @Transactional
+  public void logout(UserEntity userEntity) {
+    userEntity.setToken(null);
+    userEntity.setTokenExpiriedAt(null);
+
+    userRepository.save(userEntity);
+  }
 }
