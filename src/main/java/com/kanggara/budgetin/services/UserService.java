@@ -32,7 +32,7 @@ public class UserService {
     validationService.validate(registerUserRequest);
     String username = registerUserRequest.getUsername();
 
-    if (username != null && (userRepository.existsById(username))) {
+    if (username == null || (userRepository.existsById(username))) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already registered");
     }
 
@@ -64,7 +64,9 @@ public class UserService {
       userEntity.setPassword(BCrypt.hashpw(updateUserRequest.getPassword(), BCrypt.gensalt()));
     }
 
-    userRepository.save(userEntity);
+    if (Objects.nonNull(updateUserRequest.getName()) || Objects.nonNull(updateUserRequest.getPassword())) {
+      userRepository.save(userEntity);
+    }
 
     return UserResponse.builder()
         .username(userEntity.getUsername())

@@ -95,4 +95,102 @@ class UpdateUserTest {
         });
   }
 
+  @Test
+  void updateUserSuccess2() throws Exception {
+
+    UserEntity userEntity = new UserEntity();
+    userEntity.setName("test");
+    userEntity.setUsername("test");
+    userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
+    userEntity.setToken("token");
+    userEntity.setTokenExpiriedAt(System.currentTimeMillis() + 360000);
+    userRepository.save(userEntity);
+
+    UpdateUserRequest updateUserRequest = new UpdateUserRequest();
+    updateUserRequest.setPassword("PasswordBaru");
+
+    mockMvc.perform(
+        patch("/api/user")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(updateUserRequest))
+            .header("X-API-TOKEN", "token"))
+        .andExpect(
+            status().isOk())
+        .andDo(result -> {
+          WebResponse<UserResponse> response = objectMapper.readValue(result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNull(response.getError());
+          assertEquals("test", response.getData().getUsername());
+
+          UserEntity userDb = userRepository.findById("test").orElse(null);
+
+          assertNotNull(userDb);
+          assertTrue(BCrypt.checkpw("PasswordBaru", userDb.getPassword()));
+          assertFalse(BCrypt.checkpw("passwordpanjang", userDb.getPassword()));
+        });
+  }
+
+  @Test
+  void updateUserSuccess3() throws Exception {
+
+    UserEntity userEntity = new UserEntity();
+    userEntity.setName("test");
+    userEntity.setUsername("test");
+    userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
+    userEntity.setToken("token");
+    userEntity.setTokenExpiriedAt(System.currentTimeMillis() + 360000);
+    userRepository.save(userEntity);
+
+    UpdateUserRequest updateUserRequest = new UpdateUserRequest();
+    updateUserRequest.setName("Nama Baru");
+
+    mockMvc.perform(
+        patch("/api/user")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(updateUserRequest))
+            .header("X-API-TOKEN", "token"))
+        .andExpect(
+            status().isOk())
+        .andDo(result -> {
+          WebResponse<UserResponse> response = objectMapper.readValue(result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNull(response.getError());
+          assertEquals("Nama Baru", response.getData().getName());
+          assertEquals("test", response.getData().getUsername());
+
+          UserEntity userDb = userRepository.findById("test").orElse(null);
+
+          assertNotNull(userDb);
+        });
+  }
+
+  @Test
+  void updateUserNull() throws Exception {
+    UpdateUserRequest updateUserRequest = new UpdateUserRequest();
+
+    mockMvc.perform(
+
+        patch("/api/user")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(updateUserRequest))
+            .header("X-API-TOKEN", "token"))
+        .andExpect(
+            status().isOk())
+        .andDo(result -> {
+          WebResponse<UserResponse> response = objectMapper.readValue(result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNull(response.getError());
+
+          UserEntity userDb = userRepository.findById("test").orElse(null);
+
+          assertNotNull(userDb);
+        });
+  }
+
 }
