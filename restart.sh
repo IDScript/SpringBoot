@@ -19,8 +19,6 @@ main(){
   export $(cat .env | xargs)
   git restore pom.xml
   version
-  export JAVA_HOME="$HOME/dev/jdk"
-  nohup ~/dev/mvn/bin/mvn clean spring-boot:run &
 }
 
 main

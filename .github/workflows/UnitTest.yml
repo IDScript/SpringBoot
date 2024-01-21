@@ -22,6 +22,7 @@ jobs:
       DB_NAME: budgetin
       DB_HOST: localhost
       DB_PORT: 3306
+      JPA_SHOW_SQL: true
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK ${{ matrix.java }}
@@ -50,6 +51,7 @@ jobs:
       DB_NAME: budgetin
       DB_HOST: localhost
       DB_PORT: 3306
+      JPA_SHOW_SQL: true
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 21
@@ -160,6 +162,7 @@ jobs:
       DB_NAME: budgetin
       DB_HOST: localhost
       DB_PORT: 3306
+      JPA_SHOW_SQL: true
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
