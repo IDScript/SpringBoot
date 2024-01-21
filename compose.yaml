@@ -8,19 +8,18 @@ services:
       - 3306:3306
     networks:
       - springmysql-net
-    environment:
-      MYSQL_DATABASE: budgetin
-      MYSQL_USER: budgetin
-      MYSQL_PASSWORD: budgetin
-      MYSQL_ROOT_PASSWORD: budgetin
+    env_file:
+      - .env
 
   api_service:
     build: .
     depends_on:
       - mysqldb
     restart: always
+    env_file:
+      - .env
     ports:
-      - 8080:8080
+      - 80:8080
     networks:
       - springmysql-net
     volumes:
@@ -28,4 +27,3 @@ services:
 
 networks:
   springmysql-net:
-

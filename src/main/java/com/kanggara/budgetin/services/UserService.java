@@ -42,7 +42,7 @@ public class UserService {
     }
 
     UserEntity user = new UserEntity();
-    user.setUsername(registerUserRequest.getUsername());
+    user.setUsername(username);
     user.setPassword(BCrypt.hashpw(registerUserRequest.getPassword(), BCrypt.gensalt()));
     user.setName(registerUserRequest.getName());
 
