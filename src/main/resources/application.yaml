@@ -10,13 +10,13 @@ spring:
       maximum-pool-size: 50
   jpa:
     open-in-view: false
-    show-sql: true
+    show-sql: ${JPA_SHOW_SQL}
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        '[show_sql]': true
-        '[format_sql]': true
+        '[show_sql]': ${JPA_SHOW_SQL}
+        '[format_sql]': ${JPA_SHOW_SQL}
 # server:
 #   error:
 #     whitelabel:
