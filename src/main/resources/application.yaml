@@ -1,4 +1,8 @@
 spring:
+  devtools:
+    livereload:
+      enabled: true
+    add-properties: false
   datasource:
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
     type: com.zaxxer.hikari.HikariDataSource
@@ -17,6 +21,15 @@ spring:
       hibernate:
         '[show_sql]': ${JPA_SHOW_SQL}
         '[format_sql]': ${JPA_SHOW_SQL}
+logging:
+  level:
+    web: WARN
+    root: INFO
+    org:
+      springframework:
+        web: WARN
+      hibernate: WARN
+
 # server:
 #   error:
 #     whitelabel:
