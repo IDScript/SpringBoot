@@ -5,7 +5,7 @@ version(){
   VER=`gitversion | grep NuGetVersionV2 | cut -d'"' -f 4`
   OUTPUT=springApp-${VER}.war
 
-  sed "s/\<version\>0.0.1.*/\<version\>${VER}\<\/version\>/" pom.xml > pom2.xml
+  sed "s/\<version\>9.9.9.*/\<version\>${VER}\<\/version\>/" pom.xml > pom2.xml
   mv pom2.xml pom.xml
 }
 

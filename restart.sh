@@ -19,7 +19,6 @@ main(){
   export $(cat .env | xargs)
   git restore pom.xml
   version
-  mvn clean spring-boot:run
 }
 
 main
