@@ -19,7 +19,7 @@ main(){
   export $(cat .env | xargs)
   git restore pom.xml
   version
-  nohup mvn clean spring-boot:run &
+  nohup ~/dev/mvn/bin/mvn clean spring-boot:run &
 }
 
 main
