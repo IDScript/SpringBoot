@@ -10,7 +10,7 @@ jobs:
   unit_test:
     runs-on: ubuntu-latest
     steps:
-    - name: multiple command
+    - name: Test Restart
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.SSH_HOST }}
@@ -18,6 +18,4 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        script: |
-          whoami
-          ls -al
+        script: cd /home/idscript/work/SpringBoot && git pull && ./restart.sh
