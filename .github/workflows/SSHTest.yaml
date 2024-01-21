@@ -9,16 +9,14 @@ on:
 jobs:
   unit_test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-  name: multiple command
-  uses: appleboy/ssh-action@v1.0.3
-  with:
-    host: ${{ secrets.SSH_HOST }}
-    username: ${{ secrets.SSH_USER }}
-    key: ${{ secrets.SSH_KEY }}
-    port: ${{ secrets.SSH_PORT }}
-    script: |
-      whoami
-      ls -al
+    steps:
+    - name: multiple command
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          whoami
+          ls -al
