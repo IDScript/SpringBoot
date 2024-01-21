@@ -1,0 +1,16 @@
+[Unit]
+Description=Budgetin
+After=syslog.target network.target
+
+[Service]
+User=idscript
+Group=idscript
+
+Environment="JAVA_HOME=/home/idscript/dev/jdk"
+
+ExecStart=${JAVA_HOME}/bin/java -jar ~/work/SpringBoot/target/budgetin.jar
+ExecStop=/bin/kill -15 $MAINPID
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
