@@ -3,7 +3,7 @@
 # Get ad set package version
 version(){
   VER=`gitversion | grep NuGetVersionV2 | cut -d'"' -f 4`
-  sed "s/\<version\>9.9.9.*/\<version\>${VER}\<\/version\>/" pom.xml > pom2.xml
+  sed "s/9.9.9/${VER}/g" pom.xml > pom2.xml
   mv pom2.xml pom.xml
 }
 
@@ -19,6 +19,7 @@ main(){
   export $(cat .env | xargs)
   git restore pom.xml
   version
+  nohup mvn clean spring-boot:run &
 }
 
 main
