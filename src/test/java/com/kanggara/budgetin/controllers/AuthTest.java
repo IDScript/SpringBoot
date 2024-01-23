@@ -215,7 +215,7 @@ class AuthTest {
           assertNull(response.getError());
           assertEquals("OK", response.getData());
 
-          UserEntity userDb = new UserEntity();
+          UserEntity userDb = userRepository.findById("test").orElse(null);
           assertNull(userDb.getToken());
           assertNull(userDb.getTokenExpiriedAt());
 
