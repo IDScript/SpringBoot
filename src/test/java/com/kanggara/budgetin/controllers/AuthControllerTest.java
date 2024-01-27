@@ -1,11 +1,8 @@
 package com.kanggara.budgetin.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +24,8 @@ import com.kanggara.budgetin.models.WebResponse;
 import com.kanggara.budgetin.entities.UserEntity;
 import com.kanggara.budgetin.models.TokenResponse;
 import com.kanggara.budgetin.models.LoginUserRequest;
-import com.kanggara.budgetin.repository.ContactRepository;
 import com.kanggara.budgetin.repository.UserRepository;
+import com.kanggara.budgetin.repository.ContactRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -199,7 +196,6 @@ class AuthControllerTest {
 
   @Test
   void logoutSuccess() throws Exception {
-
     UserEntity userEntity = new UserEntity();
     userEntity.setName("test");
     userEntity.setUsername("test");

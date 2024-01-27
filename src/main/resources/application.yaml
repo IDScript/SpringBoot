@@ -27,7 +27,7 @@ logging:
     root: INFO
     org:
       springframework:
-        web: WARN
+        web: DEBUG
       hibernate: WARN
 
 # server:

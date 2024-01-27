@@ -132,7 +132,6 @@ class ContactControllerTest {
 
   @Test
   void getContactNotFound() throws Exception {
-
     mockMvc.perform(
         get("/api/contact/1122334455")
             .accept(MediaType.APPLICATION_JSON)

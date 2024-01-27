@@ -1,7 +1,7 @@
 package com.kanggara.budgetin.controllers;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
@@ -11,22 +11,22 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.lang.Nullable;
+import org.springframework.http.MediaType;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import com.kanggara.budgetin.security.BCrypt;
 import com.kanggara.budgetin.models.WebResponse;
 import com.kanggara.budgetin.entities.UserEntity;
-import com.kanggara.budgetin.repository.ContactRepository;
+import com.kanggara.budgetin.models.UserResponse;
+import com.kanggara.budgetin.models.UpdateUserRequest;
 import com.kanggara.budgetin.repository.UserRepository;
 import com.kanggara.budgetin.models.RegisterUserRequest;
-import com.kanggara.budgetin.models.UpdateUserRequest;
-import com.kanggara.budgetin.models.UserResponse;
+import com.kanggara.budgetin.repository.ContactRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
