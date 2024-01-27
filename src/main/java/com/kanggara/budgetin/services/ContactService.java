@@ -13,6 +13,7 @@ import com.kanggara.budgetin.entities.UserEntity;
 import com.kanggara.budgetin.entities.ContactEntity;
 import com.kanggara.budgetin.models.ContactResponse;
 import com.kanggara.budgetin.models.CreateContactRequest;
+import com.kanggara.budgetin.models.UpdateContactRequest;
 import com.kanggara.budgetin.repository.ContactRepository;
 
 @Slf4j
@@ -62,6 +63,30 @@ public class ContactService {
 
     return toContactResponse(contact);
 
+  }
+
+  @Transactional
+  public ContactResponse update(UserEntity userEntity, UpdateContactRequest request) {
+    validationService.validate(request);
+
+    ContactEntity contact = contactRepository.findFirstByUserAndId(userEntity, request.getId())
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact Not Found"));
+
+    contact.setFirstName(request.getFirstName());
+    contact.setLastName(request.getLastName());
+    contact.setPhone(request.getPhone());
+    contact.setEmail(request.getEmail());
+    contactRepository.save(contact);
+
+    return toContactResponse(contact);
+  }
+
+  @Transactional
+  public void delete(UserEntity userEntity, String contactId) {
+    ContactEntity contact = contactRepository.findFirstByUserAndId(userEntity, contactId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact Not Found"));
+
+    contactRepository.delete(contact);
   }
 
 }
