@@ -1,11 +1,10 @@
 package com.kanggara.budgetin.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 
 import com.kanggara.budgetin.models.WebResponse;
 import com.kanggara.budgetin.entities.UserEntity;
+import com.kanggara.budgetin.entities.ContactEntity;
 import com.kanggara.budgetin.models.ContactResponse;
 import com.kanggara.budgetin.repository.UserRepository;
 import com.kanggara.budgetin.models.CreateContactRequest;
@@ -28,7 +28,7 @@ import com.kanggara.budgetin.repository.ContactRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class CreateContactTest {
+class ContactControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
@@ -113,5 +113,71 @@ class CreateContactTest {
           assertTrue(contactRepository.existsById(response.getData().getId()));
         });
 
+  }
+
+  @Test
+  void getContactNoToken() throws Exception {
+    mockMvc.perform(
+        get("/api/contact/1122334455")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpectAll(status().isUnauthorized()).andDo(result -> {
+          WebResponse<String> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNotNull(response.getError());
+        });
+  }
+
+  @Test
+  void getContactNotFound() throws Exception {
+
+    mockMvc.perform(
+        get("/api/contact/1122334455")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("X-API-TOKEN", "token"))
+        .andExpectAll(status().isNotFound()).andDo(result -> {
+          WebResponse<ContactResponse> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNotNull(response.getError());
+        });
+  }
+
+  @Test
+  void getContactSuccess() throws Exception {
+    UserEntity userEntity = userRepository.findById("test").orElseThrow();
+
+    ContactEntity contactEntity = new ContactEntity();
+    contactEntity.setId(UUID.randomUUID().toString());
+    contactEntity.setUser(userEntity);
+    contactEntity.setFirstName("coba");
+    contactEntity.setLastName("test");
+    contactEntity.setEmail("coba@test.com");
+    contactEntity.setPhone("1122334455");
+    contactRepository.save(contactEntity);
+
+    mockMvc.perform(
+        get("/api/contact/" + contactEntity.getId())
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("X-API-TOKEN", "token"))
+        .andExpectAll(status().isOk()).andDo(result -> {
+          WebResponse<ContactResponse> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+          assertNull(response.getError());
+          assertNotNull(response.getData());
+          assertEquals(contactEntity.getId(), response.getData().getId());
+          assertEquals(contactEntity.getEmail(), response.getData().getEmail());
+          assertEquals(contactEntity.getPhone(), response.getData().getPhone());
+          assertEquals(contactEntity.getLastName(), response.getData().getLastName());
+          assertEquals(contactEntity.getFirstName(), response.getData().getFirstName());
+
+        });
   }
 }

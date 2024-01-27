@@ -27,11 +27,12 @@ import com.kanggara.budgetin.models.WebResponse;
 import com.kanggara.budgetin.entities.UserEntity;
 import com.kanggara.budgetin.models.TokenResponse;
 import com.kanggara.budgetin.models.LoginUserRequest;
+import com.kanggara.budgetin.repository.ContactRepository;
 import com.kanggara.budgetin.repository.UserRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AuthTest {
+class AuthControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
@@ -40,10 +41,14 @@ class AuthTest {
   private UserRepository userRepository;
 
   @Autowired
+  private ContactRepository contactRepository;
+
+  @Autowired
   private ObjectMapper objectMapper;
 
   @BeforeEach
   void setUp() {
+    contactRepository.deleteAll();
     userRepository.deleteAll();
   }
 
