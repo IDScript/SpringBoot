@@ -30,8 +30,10 @@ logging:
         web: DEBUG
       hibernate: WARN
 
-# server:
-#   error:
-#     whitelabel:
-#       enabled: true
-    # path: /error
+server:
+  error:
+    include-exception: true
+    include-stacktrace: always
+    whitelabel:
+      enabled: true
+    path: /error
