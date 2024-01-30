@@ -8,7 +8,7 @@ version(){
 }
 
 main(){
-# Check env file
+  # Check env file
   if [ ! -f .env ]
   then
       echo ".env Not File found, Create from Example"
@@ -18,11 +18,6 @@ main(){
   fi
   export $(cat .env | xargs)
   version
-  export MAVEN_HOME="$HOME/dev/mvn/bin"
-  export JAVA_HOME="$HOME/dev/jdk"
-  export PATH=$JAVA_HOME:$JAVA_HOME/bin:$MAVEN_HOME:$PATH
-  mvn clean package
-  mv target/budgetin.jar ~/app/budgetin.jar
 }
 
 main
