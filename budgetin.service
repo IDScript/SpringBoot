@@ -1,19 +1,15 @@
 [Unit]
 Description=Budgetin port 8090
-After=syslog.target network.target
+After=syslog.target
 
 [Service]
 User=idscript
 Group=idscript
-
-RestartSec=5
-Restart=on-failure
-
-ExecStop=/bin/kill -15 $MAINPID
 ExecStart=~/dev/jdk/bin/java -jar ~/app/budgetin.jar --server.port=8090
-
-TimeoutStopSec=10
 SuccessExitStatus=143
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
