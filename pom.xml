@@ -110,6 +110,7 @@
           </execution>
         </executions>
 				<configuration>
+          <executable>true</executable>
           <excludeDevtools>false</excludeDevtools>
 					<excludes>
 						<exclude>

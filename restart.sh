@@ -16,9 +16,12 @@ main(){
   else
       echo ".env File found"
   fi
+  git restore .
+  git pull
   export $(cat .env | xargs)
-  git restore pom.xml
   version
+  mvn clean package
+  mv target/budgetin.jar ~/app/budgetin.jar
 }
 
 main
