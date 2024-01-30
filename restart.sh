@@ -18,7 +18,10 @@ main(){
   fi
   export $(cat .env | xargs)
   version
-  ~/dev/mvn/bin/mvn clean package
+  export MAVEN_HOME="$HOME/dev/mvn/bin"
+  export JAVA_HOME="$HOME/dev/jdk"
+  export PATH=$JAVA_HOME:$JAVA_HOME/bin:$MAVEN_HOME:$PATH
+  mvn clean package
   mv target/budgetin.jar ~/app/budgetin.jar
 }
 
