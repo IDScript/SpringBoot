@@ -3,6 +3,13 @@ spring:
     livereload:
       enabled: true
     add-properties: false
+    restart:
+      enabled: 'true'
+      poll-interval: 2s
+      quiet-period: 1s
+      additional-paths:
+      - src/main/java/
+
   datasource:
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
     type: com.zaxxer.hikari.HikariDataSource
@@ -12,6 +19,7 @@ spring:
     hikari:
       minimum-idle: 10
       maximum-pool-size: 50
+
   jpa:
     open-in-view: false
     show-sql: ${JPA_SHOW_SQL}
@@ -21,6 +29,7 @@ spring:
       hibernate:
         '[show_sql]': ${JPA_SHOW_SQL}
         '[format_sql]': ${JPA_SHOW_SQL}
+
 logging:
   level:
     web: WARN
