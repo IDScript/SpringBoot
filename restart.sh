@@ -16,8 +16,6 @@ main(){
   else
       echo ".env File found"
   fi
-  git restore .
-  git pull
   export $(cat .env | xargs)
   version
   mvn clean package
