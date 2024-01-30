@@ -18,7 +18,7 @@ main(){
   fi
   export $(cat .env | xargs)
   version
-  mvn clean package
+  ~/dev/mvn/bin/mvn clean package
   mv target/budgetin.jar ~/app/budgetin.jar
 }
 
