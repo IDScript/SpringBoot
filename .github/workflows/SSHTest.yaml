@@ -18,8 +18,10 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
+        script_stop: true
         script: |
           cd ~/work/SpringBoot
           git restore .
           git pull
           ./restart.sh
+          sudo systemctl restart budgetin
