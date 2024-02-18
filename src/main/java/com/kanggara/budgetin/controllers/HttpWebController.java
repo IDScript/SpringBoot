@@ -16,7 +16,7 @@ public class HttpWebController {
     this.buildProperties = buildProperties;
   }
 
-  @GetMapping("/test")
+  @GetMapping("/version")
   public WebResponse<String> coba(@RequestParam(required = false) String data) {
     String artifac = buildProperties.getArtifact();
     String version = buildProperties.getVersion();
@@ -25,7 +25,7 @@ public class HttpWebController {
 
   @GetMapping(value = { "/favicon", "/favicon.ico" })
   public void returnNoFavicon() {
-    // TODO document why this method is empty
+    // TODO: document why this method is empty
   }
 
 }
