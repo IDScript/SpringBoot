@@ -1,11 +1,16 @@
 [Unit]
 Description=Budgetin port 8090
-After=syslog.target
+After=network-online.target syslog.target
+Wants=network-online.target systemd-networkd-wait-online.service
 
 [Service]
 User=idscript
 Group=idscript
-ExecStart=/home/idscript/dev/jdk/bin/java -jar ~/app/budgetin.jar --server.port=8090
+ExecStart=/home/idscript/dev/mvn/bin/mvn spring-boot:run
+Environment=JAVA_HOME=/home/idscript/dev/jdk
+WorkingDirectory=/home/idscript/work/SpringBoot
+StandardOutput=syslog
+StandardError=syslog
 SuccessExitStatus=143
 TimeoutStopSec=10
 Restart=on-failure
