@@ -1,11 +1,10 @@
 package com.kanggara.budgetin.controllers;
 
+import com.kanggara.budgetin.models.VersionResponse;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.kanggara.budgetin.models.WebResponse;
 
 @RestController
 public class HttpWebController {
@@ -17,13 +16,13 @@ public class HttpWebController {
   }
 
   @GetMapping("/version")
-  public WebResponse<String> coba(@RequestParam(required = false) String data) {
+  public VersionResponse coba(@RequestParam(required = false) String data) {
     String artifac = buildProperties.getArtifact();
     String version = buildProperties.getVersion();
-    return WebResponse.<String>builder().data(data + " " + artifac + " " + version).build();
+    return VersionResponse.builder().data(data).version(version).artifac(artifac).build();
   }
 
-  @GetMapping(value = { "/favicon", "/favicon.ico" })
+  @GetMapping(value = { "/favicon", "/favicon.ico", "sitemap.xml" })
   public void returnNoFavicon() {
     // TODO: document why this method is empty
   }
