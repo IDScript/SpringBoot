@@ -3,8 +3,12 @@ name: 🔬 Maven Unit Test
 on:
   push:
     branches: [ "main", "qa", "dev" ]
+    paths:
+      - 'src/**'
   pull_request:
     branches: [ "main", "qa", "dev" ]
+    paths:
+      - 'src/**'
 
 jobs:
   unit_test:
