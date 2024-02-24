@@ -14,8 +14,8 @@ public class VersionResponse {
 
   private String data;
 
-  private String version;
-
   private String artifac;
+
+  private String version;
 
 }

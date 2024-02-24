@@ -1,23 +1,16 @@
 package com.kanggara.budgetin.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
-
 import com.kanggara.budgetin.models.WebResponse;
 import com.kanggara.budgetin.entities.UserEntity;
+import com.kanggara.budgetin.entities.AddressEntity;
 import com.kanggara.budgetin.entities.ContactEntity;
 import com.kanggara.budgetin.models.AddressResponse;
 import com.kanggara.budgetin.repository.UserRepository;
@@ -25,6 +18,15 @@ import com.kanggara.budgetin.models.CreateAddressRequest;
 import com.kanggara.budgetin.repository.AddressRepository;
 import com.kanggara.budgetin.repository.ContactRepository;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
@@ -95,7 +97,7 @@ class AddressControllerTest {
   }
 
   @Test
-  void createAddtessSucess() throws Exception {
+  void createAddressSucess() throws Exception {
     CreateAddressRequest req = new CreateAddressRequest();
     req.setStreet("Jalan Jalan");
     req.setCity("Pekanbaru");
@@ -122,6 +124,61 @@ class AddressControllerTest {
           assertEquals(req.getCountry(), response.getData().getCountry());
           assertEquals(req.getProvince(), response.getData().getProvince());
           assertEquals(req.getPostalCode(), response.getData().getPostalCode());
+
+          assertTrue(addressRepository.existsById(response.getData().getId()));
+        });
+
+  }
+
+  @Test
+  void getAddressNotFound() throws Exception {
+    mockMvc.perform(
+        get("/api/contacts/test/addresses/test")
+            .header("X-API-TOKEN", "token")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound()).andDo(result -> {
+          WebResponse<String> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<WebResponse<String>>() {
+              });
+
+          assertNotNull(response.getError());
+        });
+  }
+
+  @Test
+  void getAddressSucess() throws Exception {
+    ContactEntity contactEntity = contactRepository.findById("test").orElseThrow();
+
+    AddressEntity address = new AddressEntity();
+    address.setId("test");
+    address.setCity("Pekanbaru");
+    address.setStreet("Jalan Jalan");
+    address.setContact(contactEntity);
+    address.setCountry("Indonesia");
+    address.setProvince("Riau");
+    address.setPostalCode("28213");
+    addressRepository.save(address);
+
+    mockMvc.perform(
+        get("/api/contacts/test/addresses/test")
+            .header("X-API-TOKEN", "token")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andDo(result -> {
+          WebResponse<AddressResponse> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+
+          assertNull(response.getError());
+          assertNotNull(response.getData());
+          assertEquals(address.getCity(), response.getData().getCity());
+          assertEquals(address.getStreet(), response.getData().getStreet());
+          assertEquals(address.getCountry(), response.getData().getCountry());
+          assertEquals(address.getProvince(), response.getData().getProvince());
+          assertEquals(address.getPostalCode(), response.getData().getPostalCode());
 
           assertTrue(addressRepository.existsById(response.getData().getId()));
         });

@@ -49,7 +49,17 @@ public class AddressService {
     addressRepository.save(addressEntity);
 
     return toAddressResponse(addressEntity);
+  }
 
+  @Transactional
+  public AddressResponse get(UserEntity userEntity, String contactId, String addrressId) {
+    ContactEntity contactEntity = contactRepository.findFirstByUserAndId(userEntity, contactId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact Not Found"));
+
+    AddressEntity addressEntity = addressRepository.findFirstByContactAndId(contactEntity, addrressId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address Not Found"));
+
+    return toAddressResponse(addressEntity);
   }
 
   private AddressResponse toAddressResponse(AddressEntity addressEntity) {

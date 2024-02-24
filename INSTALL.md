@@ -176,3 +176,24 @@ and add following code
 ```config
 username ALL=(ALL) NOPASSWD: /usr/bin/systemctl
 ```
+
+### Port forwarding
+
+```bash
+iptables -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080
+```
+
+add sudo if got following output
+
+```bash
+iptables v1.8.7 (nf_tables): unknown option "--dport"
+Try `iptables -h' or 'iptables --help' for more information.
+```
+
+```bash
+sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8080
+```
+
+### HTTPS Install
+
+TODO: TODO
