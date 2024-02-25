@@ -1,5 +1,6 @@
 package com.kanggara.budgetin.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -92,6 +93,17 @@ public class AddressService {
         .orElseThrow(() -> notFound("Address Not Found"));
 
     addressRepository.delete(addressEntity);
+  }
+
+  @Transactional(readOnly = true)
+  public List<AddressResponse> list(UserEntity userEntity, String contactId) {
+    ContactEntity contactEntity = contactRepository.findFirstByUserAndId(userEntity, contactId)
+        .orElseThrow(() -> notFound("Contact Not Found"));
+
+    List<AddressEntity> addresses = addressRepository.findAllByContact(contactEntity);
+
+    return addresses.stream().map(this::toAddressResponse).toList();
+
   }
 
   private ResponseStatusException notFound(String msg) {

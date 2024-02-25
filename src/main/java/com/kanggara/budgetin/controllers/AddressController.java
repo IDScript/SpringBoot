@@ -9,6 +9,8 @@ import com.kanggara.budgetin.services.AddressService;
 import com.kanggara.budgetin.models.CreateAddressRequest;
 import com.kanggara.budgetin.models.UpdateAddressRequest;
 
+import java.util.List;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -47,6 +49,15 @@ public class AddressController {
     AddressResponse addressResponse = addressService.get(userEntity, contactId, addressId);
 
     return WebResponse.<AddressResponse>builder().data(addressResponse).build();
+  }
+
+  @GetMapping(path = "/api/contacts/{contactId}/addresses", produces = MediaType.APPLICATION_JSON_VALUE)
+  public WebResponse<List<AddressResponse>> getMethodName(UserEntity userEntity,
+      @PathVariable("contactId") String contactId) {
+
+    List<AddressResponse> addressList = addressService.list(userEntity, contactId);
+
+    return WebResponse.<List<AddressResponse>>builder().data(addressList).build();
   }
 
   @PutMapping(path = "/api/contacts/{contactId}/addresses/{addressId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

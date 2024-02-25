@@ -9,6 +9,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 import com.kanggara.budgetin.models.WebResponse;
@@ -201,6 +204,59 @@ class AddressControllerTest {
           assertTrue(addressRepository.existsById(response.getData().getId()));
         });
 
+  }
+
+  @Test
+  void listAddressContactNotFound() throws Exception {
+    mockMvc.perform(
+        get("/api/contacts/salah/addresses")
+            .header("X-API-TOKEN", "token")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound()).andDo(result -> {
+          WebResponse<String> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<WebResponse<String>>() {
+              });
+
+          assertNull(response.getData());
+          assertNotNull(response.getError());
+          assertEquals("Contact Not Found", response.getError());
+        });
+  }
+
+  @Test
+  void listAddressSucess() throws Exception {
+    ContactEntity contactEntity = contactRepository.findById("test").orElseThrow();
+
+    for (int i = 0; i < 5; i++) {
+
+      AddressEntity address = new AddressEntity();
+      address.setId("test" + i);
+      address.setCity("Pekanbaru");
+      address.setStreet("Jalan Jalan");
+      address.setContact(contactEntity);
+      address.setCountry("Indonesia");
+      address.setProvince("Riau");
+      address.setPostalCode("28213");
+      addressRepository.save(address);
+    }
+
+    mockMvc.perform(
+        get("/api/contacts/test/addresses")
+            .header("X-API-TOKEN", "token")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andDo(result -> {
+          WebResponse<List<AddressResponse>> response = objectMapper.readValue(
+              result.getResponse().getContentAsString(),
+              new TypeReference<>() {
+              });
+
+          assertNull(response.getError());
+          assertNotNull(response.getData());
+          assertEquals(5, response.getData().size());
+        });
   }
 
   @Test
