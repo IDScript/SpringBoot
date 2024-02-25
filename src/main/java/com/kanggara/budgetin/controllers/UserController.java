@@ -24,7 +24,7 @@ public class UserController {
     this.userService = userService;
   }
 
-  @PostMapping(path = "/api/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(path = "/api/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public WebResponse<String> register(@RequestBody RegisterUserRequest registerUserRequest) {
     userService.register(registerUserRequest);
     return WebResponse.<String>builder().data("OK").build();

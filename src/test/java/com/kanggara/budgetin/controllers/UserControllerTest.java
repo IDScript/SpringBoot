@@ -58,7 +58,7 @@ class UserControllerTest {
     registerUserRequest.setUsername("test");
 
     mockMvc.perform(
-        post("/api/users")
+        post("/api/register")
             .accept(APPLICATION_JSON)
             .contentType(APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(registerUserRequest)))
@@ -86,7 +86,7 @@ class UserControllerTest {
     registerUserRequest.setPassword("secrets");
 
     mockMvc.perform(
-        post("/api/users")
+        post("/api/register")
             .accept(APPLICATION_JSON)
             .contentType(APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(registerUserRequest)))
@@ -120,7 +120,7 @@ class UserControllerTest {
     registerUserRequest.setName(name);
 
     mockMvc.perform(
-        post("/api/users")
+        post("/api/register")
             .accept(APPLICATION_JSON)
             .contentType(APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(registerUserRequest)))
