@@ -48,7 +48,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     UserEntity userEntity = userRepository.findByToken(token).orElseThrow(this::unauthorized);
     log.info("USER {}", userEntity);
-    if (userEntity.getTokenExpiriedAt() < System.currentTimeMillis()) {
+    if (userEntity.getTokenExpiriedAt() < (System.currentTimeMillis() / 1000)) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token Expiried");
     }
 

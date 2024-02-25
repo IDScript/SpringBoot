@@ -60,10 +60,12 @@ public class AuthService {
   }
 
   /**
-   * @return Long milis to next 30 days (1000ms * 60s * 24h * 30d)
+   * @return Long Epoch to next 30 days (60s * 60m * 24h * 30d)
    */
   private Long next30Day() {
-    return System.currentTimeMillis() + (1000 * 60 * 24 * 30);
+    Long next30Day = (System.currentTimeMillis() / 1000) + (60 * 60 * 24 * 30);
+    log.info("Epoch : {}", next30Day);
+    return next30Day;
   }
 
   @Transactional

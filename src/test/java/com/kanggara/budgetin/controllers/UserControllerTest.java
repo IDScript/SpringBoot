@@ -170,7 +170,7 @@ class UserControllerTest {
     userEntity.setUsername("test");
     userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
     userEntity.setToken("token");
-    userEntity.setTokenExpiriedAt(System.currentTimeMillis() + 36000);
+    userEntity.setTokenExpiriedAt(System.currentTimeMillis() / 1000 + 36000);
     userRepository.save(userEntity);
 
     mockMvc.perform(
@@ -194,7 +194,7 @@ class UserControllerTest {
     userEntity.setUsername("test");
     userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
     userEntity.setToken("token");
-    userEntity.setTokenExpiriedAt(System.currentTimeMillis() - 3600);
+    userEntity.setTokenExpiriedAt(System.currentTimeMillis() / 1000 - 3600);
     userRepository.save(userEntity);
 
     mockMvc.perform(
@@ -238,7 +238,7 @@ class UserControllerTest {
     userEntity.setUsername("test");
     userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
     userEntity.setToken("token");
-    userEntity.setTokenExpiriedAt(System.currentTimeMillis() + 360000);
+    userEntity.setTokenExpiriedAt(System.currentTimeMillis() / 1000 + 360000);
     userRepository.save(userEntity);
 
     UpdateUserRequest updateUserRequest = new UpdateUserRequest();
@@ -277,7 +277,7 @@ class UserControllerTest {
     userEntity.setUsername("test");
     userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
     userEntity.setToken("token");
-    userEntity.setTokenExpiriedAt(System.currentTimeMillis() + 360000);
+    userEntity.setTokenExpiriedAt(System.currentTimeMillis() / 1000 + 360000);
     userRepository.save(userEntity);
 
     UpdateUserRequest updateUserRequest = new UpdateUserRequest();
@@ -314,7 +314,7 @@ class UserControllerTest {
     userEntity.setUsername("test");
     userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
     userEntity.setToken("token");
-    userEntity.setTokenExpiriedAt(System.currentTimeMillis() + 360000);
+    userEntity.setTokenExpiriedAt(System.currentTimeMillis() / 1000 + 360000);
     userRepository.save(userEntity);
 
     UpdateUserRequest updateUserRequest = new UpdateUserRequest();
@@ -349,7 +349,7 @@ class UserControllerTest {
     userEntity.setUsername("test");
     userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
     userEntity.setToken("token");
-    userEntity.setTokenExpiriedAt(System.currentTimeMillis() + 360000);
+    userEntity.setTokenExpiriedAt(System.currentTimeMillis() / 1000 + 360000);
     userRepository.save(userEntity);
 
     UpdateUserRequest updateUserRequest = new UpdateUserRequest();

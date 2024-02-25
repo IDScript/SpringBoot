@@ -67,7 +67,7 @@ class AddressControllerTest {
     user.setUsername("test");
     user.setPassword("rahasianya");
     user.setToken("token");
-    user.setTokenExpiriedAt(System.currentTimeMillis() + 100000);
+    user.setTokenExpiriedAt(System.currentTimeMillis()/1000 + 100000);
     userRepository.save(user);
 
     ContactEntity contactEntity = new ContactEntity();

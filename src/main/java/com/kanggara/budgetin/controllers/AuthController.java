@@ -21,7 +21,7 @@ public class AuthController {
     this.authService = authService;
   }
 
-  @PostMapping(path = "api/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(path = "/api/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public WebResponse<TokenResponse> login(@RequestBody LoginUserRequest loginUserRequest) {
     TokenResponse tokenResponse = authService.login(loginUserRequest);
     return WebResponse.<TokenResponse>builder().data(tokenResponse).build();

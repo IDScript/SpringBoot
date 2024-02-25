@@ -201,7 +201,7 @@ class AuthControllerTest {
     userEntity.setUsername("test");
     userEntity.setPassword(BCrypt.hashpw("passwordpanjang", BCrypt.gensalt()));
     userEntity.setToken("token");
-    userEntity.setTokenExpiriedAt(System.currentTimeMillis() + 36000);
+    userEntity.setTokenExpiriedAt(System.currentTimeMillis()/1000  + 36000);
     userRepository.save(userEntity);
 
     mockMvc.perform(
