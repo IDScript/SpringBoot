@@ -83,6 +83,21 @@ public class AddressService {
     return toAddressResponse(addressEntity);
   }
 
+  @Transactional
+  public void delete(UserEntity userEntity, String contactId, String addressId) {
+    ContactEntity contactEntity = contactRepository.findFirstByUserAndId(userEntity, contactId)
+        .orElseThrow(() -> notFound("Contact Not Found"));
+
+    AddressEntity addressEntity = addressRepository.findFirstByContactAndId(contactEntity, addressId)
+        .orElseThrow(() -> notFound("Address Not Found"));
+
+    addressRepository.delete(addressEntity);
+  }
+
+  private ResponseStatusException notFound(String msg) {
+    return new ResponseStatusException(HttpStatus.NOT_FOUND, msg);
+  }
+
   private AddressResponse toAddressResponse(AddressEntity addressEntity) {
 
     return AddressResponse.builder()

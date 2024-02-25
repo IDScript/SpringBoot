@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
 public class AddressController {
@@ -61,6 +62,15 @@ public class AddressController {
 
     return WebResponse.<AddressResponse>builder().data(addressResponse).build();
 
+  }
+
+  @DeleteMapping(path = "/api/contacts/{contactId}/addresses/{addressId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public WebResponse<String> delete(UserEntity userEntity,
+      @PathVariable("contactId") String contactId,
+      @PathVariable("addressId") String addressId) {
+
+    addressService.delete(userEntity, contactId, addressId);
+    return WebResponse.<String>builder().data("Deleted").build();
   }
 
 }
