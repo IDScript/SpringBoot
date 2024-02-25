@@ -12,6 +12,7 @@ import com.kanggara.budgetin.entities.AddressEntity;
 import com.kanggara.budgetin.entities.ContactEntity;
 import com.kanggara.budgetin.models.AddressResponse;
 import com.kanggara.budgetin.models.CreateAddressRequest;
+import com.kanggara.budgetin.models.UpdateAddressRequest;
 import com.kanggara.budgetin.repository.AddressRepository;
 import com.kanggara.budgetin.repository.ContactRepository;
 
@@ -36,7 +37,7 @@ public class AddressService {
     validationService.validate(request);
 
     ContactEntity contactEntity = contactRepository.findFirstByUserAndId(userEntity, request.getContactId())
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact Not Found"));
+        .orElseThrow(() -> notFound("Contact Not Found"));
 
     AddressEntity addressEntity = new AddressEntity();
     addressEntity.setId(UUID.randomUUID().toString());
@@ -51,13 +52,33 @@ public class AddressService {
     return toAddressResponse(addressEntity);
   }
 
-  @Transactional
-  public AddressResponse get(UserEntity userEntity, String contactId, String addrressId) {
+  @Transactional(readOnly = true)
+  public AddressResponse get(UserEntity userEntity, String contactId, String addressId) {
     ContactEntity contactEntity = contactRepository.findFirstByUserAndId(userEntity, contactId)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact Not Found"));
+        .orElseThrow(() -> notFound("Contact Not Found"));
 
-    AddressEntity addressEntity = addressRepository.findFirstByContactAndId(contactEntity, addrressId)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address Not Found"));
+    AddressEntity addressEntity = addressRepository.findFirstByContactAndId(contactEntity, addressId)
+        .orElseThrow(() -> notFound("Address Not Found"));
+
+    return toAddressResponse(addressEntity);
+  }
+
+  @Transactional
+  public AddressResponse update(UserEntity userEntity, UpdateAddressRequest request) {
+    validationService.validate(request);
+
+    ContactEntity contactEntity = contactRepository.findFirstByUserAndId(userEntity, request.getContactId())
+        .orElseThrow(() -> notFound("Contact Not Found"));
+
+    AddressEntity addressEntity = addressRepository.findFirstByContactAndId(contactEntity, request.getAddressId())
+        .orElseThrow(() -> notFound("Address Not Found"));
+
+    addressEntity.setCity(request.getCity());
+    addressEntity.setStreet(request.getStreet());
+    addressEntity.setCountry(request.getCountry());
+    addressEntity.setProvince(request.getProvince());
+    addressEntity.setPostalCode(request.getPostalCode());
+    addressRepository.save(addressEntity);
 
     return toAddressResponse(addressEntity);
   }
