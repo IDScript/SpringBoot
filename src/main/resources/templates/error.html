@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${message}"></title>
+</head>
+
+<body>
+  <h1>Something went wrong! </h1>
+  <h2>Our Engineers are on it</h2>
+  <a href="/">Go Home</a>
+
+  <table border="1" aria-describedby="Error Messages">
+    <tr>
+      <th>Type</th>
+      <th>Message</th>
+    </tr>
+    <tr>
+      <td>Error Message</td>
+      <td th:text="${message}"></td>
+    </tr>
+    <tr>
+      <td>Status Code</td>
+      <td th:text="${status}"></td>
+    </tr>
+    <tr>
+      <td>Exception</td>
+      <td th:text="${exception}"></td>
+    </tr>
+    <tr>
+      <td>Stacktrace</td>
+      <td>
+        <pre th:text="${trace}"></pre>
+      </td>
+    </tr>
+    <tr>
+      <td>Binding Errors</td>
+      <td th:text="${errors}"></td>
+    </tr>
+  </table>
+</body>
+
+</html>

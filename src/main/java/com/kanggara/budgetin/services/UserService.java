@@ -1,49 +1,81 @@
 package com.kanggara.budgetin.services;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Validator;
+import java.util.Objects;
+
+import org.springframework.lang.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.kanggara.budgetin.entities.User;
-import com.kanggara.budgetin.models.RegisterUserRequest;
-import com.kanggara.budgetin.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+
 import com.kanggara.budgetin.security.BCrypt;
+import com.kanggara.budgetin.entities.UserEntity;
+import com.kanggara.budgetin.models.UserResponse;
+import com.kanggara.budgetin.models.UpdateUserRequest;
+import com.kanggara.budgetin.repository.UserRepository;
+import com.kanggara.budgetin.models.RegisterUserRequest;
 
-import java.util.Set;
-
+@Slf4j
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    private final Validator validator;
+  private final ValidationService validationService;
 
-    public UserService(Validator validator, UserRepository userRepository) {
-        this.validator = validator;
-        this.userRepository = userRepository;
+  UserService(ValidationService validationService, UserRepository userRepository) {
+    this.validationService = validationService;
+    this.userRepository = userRepository;
+  }
+
+  @Transactional
+  public void register(RegisterUserRequest registerUserRequest) {
+    validationService.validate(registerUserRequest);
+    String username = registerUserRequest.getUsername();
+
+    log.info("User : {}", username);
+
+    if (userRepository.existsById(username)) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already registered");
     }
 
-    @Transactional
-    public void register(RegisterUserRequest registerUserRequest) {
-        Set<ConstraintViolation<RegisterUserRequest>> constraintViolations = validator.validate(registerUserRequest);
+    UserEntity user = new UserEntity();
+    user.setUsername(username);
+    user.setPassword(BCrypt.hashpw(registerUserRequest.getPassword(), BCrypt.gensalt()));
+    user.setName(registerUserRequest.getName());
 
-        if (!constraintViolations.isEmpty()) {
-            throw new ConstraintViolationException(constraintViolations);
-        }
+    userRepository.save(user);
+  }
 
-        if (userRepository.existsById(registerUserRequest.getUsername())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already registered");
-        }
+  public UserResponse get(UserEntity userEntity) {
+    return UserResponse.builder()
+        .username(userEntity.getUsername())
+        .name(userEntity.getName())
+        .build();
+  }
 
-        User user = new User();
-        user.setUsername(registerUserRequest.getUsername());
-        user.setPassword(BCrypt.hashpw(registerUserRequest.getPassword(), BCrypt.gensalt()));
-        user.setName(registerUserRequest.getName());
+  @Transactional
+  public UserResponse update(@NonNull UserEntity userEntity, @NonNull UpdateUserRequest updateUserRequest) {
 
-        userRepository.save(user);
+    validationService.validate(updateUserRequest);
+
+    if (Objects.nonNull(updateUserRequest.getName())) {
+      userEntity.setName(updateUserRequest.getName());
     }
+
+    if (Objects.nonNull(updateUserRequest.getPassword())) {
+      userEntity.setPassword(BCrypt.hashpw(updateUserRequest.getPassword(), BCrypt.gensalt()));
+    }
+
+    if (Objects.nonNull(updateUserRequest.getName()) || Objects.nonNull(updateUserRequest.getPassword())) {
+      userRepository.save(userEntity);
+    }
+
+    return UserResponse.builder()
+        .username(userEntity.getUsername())
+        .name(userEntity.getName())
+        .build();
+  }
 }

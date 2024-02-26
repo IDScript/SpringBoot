@@ -4,13 +4,24 @@ import lombok.Data;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(Include.NON_NULL)
 public class WebResponse<T> {
-    private T data;
+  private T data;
+  private String error;
+  private PagingResponse paging;
 
-    private String error;
+  public T getData() {
+    return data;
+  }
+
+  public String getError() {
+    return error;
+  }
 }

@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: "mysql:8.2"
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - springmysql-net
+    env_file:
+      - .env
+
+  api_service:
+    build: .
+    depends_on:
+      - mysqldb
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 80:8080
+    networks:
+      - springmysql-net
+    volumes:
+      - .m2:/root/.m2
+
+networks:
+  springmysql-net:

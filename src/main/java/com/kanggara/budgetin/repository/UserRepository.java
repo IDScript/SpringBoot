@@ -1,10 +1,12 @@
 package com.kanggara.budgetin.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
-import com.kanggara.budgetin.entities.User;
+import org.springframework.stereotype.Repository;
+import com.kanggara.budgetin.entities.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserRepository extends JpaRepository<UserEntity, String> {
+  Optional<UserEntity> findByToken(String token);
 }
