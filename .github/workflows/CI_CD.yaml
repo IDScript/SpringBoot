@@ -3,8 +3,6 @@ name: 🧪 CI and 🚀 CD
 on:
   push:
     branches: [ "main", "qa", "dev" ]
-    paths:
-      - 'src/**'
   pull_request:
     branches: [ "main", "qa", "dev" ]
     paths:
