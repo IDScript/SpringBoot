@@ -93,7 +93,6 @@ jobs:
         overwrite: true
 
   versioning:
-    name: 1 Versioning
     needs: code_coverage
     name: Create version number
     runs-on: ubuntu-latest
@@ -112,18 +111,6 @@ jobs:
       - name: Create version.txt with NuGetVersionV2
         run: echo ${{ steps.gitversion.outputs.NuGetVersionV2  }} > version.txt
       - name: Upload version.txt
-        uses: actions/upload-artifact@v4.3.1
-        with:
-          name: gitversion
-          path: version.txt
-          overwrite: true
-
-    runs-on: ubuntu-latest
-    steps:
-      - shell: bash
-        run: |
-          expr 3 + 7 > version.txt
-      - name: Upload math result for job 1
         uses: actions/upload-artifact@v4.3.1
         with:
           name: gitversion
