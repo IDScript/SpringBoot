@@ -182,7 +182,7 @@ jobs:
 
   job_4:
     name: Display final results
-    needs: [job_2, unit_test_latest_java_version]
+    needs: [job_2, code_coverage]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
