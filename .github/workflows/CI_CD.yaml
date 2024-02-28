@@ -82,6 +82,7 @@ jobs:
         with:
           name: homework
           path: math-homework.txt
+          overwrite: true
 
   job_2:
     name: Multiply by 9
@@ -101,6 +102,7 @@ jobs:
         with:
           name: homework
           path: math-homework.txt
+          overwrite: true
 
   job_3:
     name: Display results
