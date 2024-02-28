@@ -16,7 +16,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        java: ['11', '17', '21']
+        java: ['17', '21']
     name: Unit Test with Java ${{ matrix.Java }}
     env:
       DB_USERNAME: root
