@@ -92,9 +92,47 @@ jobs:
         path: target/site/jacoco/
         overwrite: true
 
+  versioning:
+    name: 1 Versioning
+    needs: code_coverage
+    name: Create version number
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Fetch all history for all tags and branches
+        run: git fetch --prune --unshallow
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.13
+        with:
+          versionSpec: "5.10.x"
+      - name: Use GitVersion
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v0.9.13
+      - name: Create version.txt with NuGetVersionV2
+        run: echo ${{ steps.gitversion.outputs.NuGetVersionV2  }} > version.txt
+      - name: Upload version.txt
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: gitversion
+          path: version.txt
+          overwrite: true
+
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: |
+          expr 3 + 7 > version.txt
+      - name: Upload math result for job 1
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: gitversion
+          path: version.txt
+          overwrite: true
+
   build_package:
     runs-on: ubuntu-latest
-    needs: unit_test_for_old_java_version
+    needs: [unit_test_for_old_java_version, versioning]
     permissions:
       contents: write
       pull-requests: write
@@ -117,54 +155,39 @@ jobs:
         overwrite: true
 
   # TODO: CI CD
-  job_1:
-    name: 1 Add 3 and 7
-    needs: code_coverage
-    runs-on: ubuntu-latest
-    steps:
-      - shell: bash
-        run: |
-          expr 3 + 7 > math-homework.txt
-      - name: Upload math result for job 1
-        uses: actions/upload-artifact@v4.3.1
-        with:
-          name: homework
-          path: math-homework.txt
-          overwrite: true
-
   job_2:
     name: 2 Multiply by 9
-    needs: job_1
+    needs: versioning
     runs-on: windows-latest
     steps:
       - name: Download math result for job 1
         uses: actions/download-artifact@v4.1.3
         with:
-          name: homework
+          name: gitversion
       - shell: bash
         run: |
-          value=`cat math-homework.txt`
-          expr $value \* 9 > math-homework.txt
+          value=`cat version.txt`
+          expr $value \* 9 > version.txt
       - name: Upload math result for job 2
         uses: actions/upload-artifact@v4.3.1
         with:
-          name: homework
-          path: math-homework.txt
+          name: gitversion
+          path: version.txt
           overwrite: true
 
   job_3:
     name: 3 Display results
-    needs: [job_1, code_coverage]
+    needs: [versioning, code_coverage]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
         uses: actions/download-artifact@v4.1.3
         with:
-          name: homework
+          name: gitversion
       - name: Print the final result
         shell: bash
         run: |
-          value=`cat math-homework.txt`
+          value=`cat version.txt`
           echo The result is $value
 
   job_4:
@@ -175,11 +198,11 @@ jobs:
       - name: Download math result for job 2
         uses: actions/download-artifact@v4.1.3
         with:
-          name: homework
+          name: gitversion
       - name: Print the final result
         shell: bash
         run: |
-          value=`cat math-homework.txt`
+          value=`cat version.txt`
           echo The result is $value
 
   job_5:
@@ -190,11 +213,11 @@ jobs:
       - name: Download math result for job 2
         uses: actions/download-artifact@v4.1.3
         with:
-          name: homework
+          name: gitversion
       - name: Print the final result
         shell: bash
         run: |
-          value=`cat math-homework.txt`
+          value=`cat version.txt`
           echo The result is $value
 
   # unit_test_latest_java_version:
