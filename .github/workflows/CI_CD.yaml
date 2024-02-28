@@ -102,12 +102,12 @@ jobs:
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.13
+        uses: gittools/actions/gitversion/setup@v0.11.0
         with:
           versionSpec: "5.10.x"
       - name: Use GitVersion
         id: gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.13
+        uses: gittools/actions/gitversion/execute@v0.11.0
       - name: Create version.txt with NuGetVersionV2
         run: echo ${{ steps.gitversion.outputs.NuGetVersionV2  }} > version.txt
       - name: Upload version.txt
@@ -154,13 +154,7 @@ jobs:
       - shell: bash
         run: |
           value=`cat version.txt`
-          expr $value \* 9 > version.txt
-      - name: Upload math result for job 2
-        uses: actions/upload-artifact@v4.3.1
-        with:
-          name: gitversion
-          path: version.txt
-          overwrite: true
+          echo The result is $value
 
   job_3:
     name: 3 Display results
