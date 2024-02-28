@@ -197,7 +197,7 @@ jobs:
 
   job_5:
     name: Display results
-    needs: [unit_test_latest_java_version, unit_test_for_old_java_version]
+    needs: [code_coverage, unit_test_for_old_java_version]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
