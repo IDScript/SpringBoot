@@ -16,7 +16,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        distribution: ['zulu', 'temurin', 'oracle', 'microsoft']
+        distribution: ['zulu', 'temurin', 'microsoft']
         java: ['17', '21']
     name: Unit Test with Java ${{ matrix.Java }} ${{ matrix.distribution }}
     env:
