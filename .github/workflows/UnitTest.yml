@@ -11,37 +11,6 @@ on:
       - 'src/**'
 
 jobs:
-  unit_test:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    strategy:
-      matrix:
-        java: [ '17', '21' ]
-    name: Unit Test with Java ${{ matrix.Java }}
-    env:
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      DB_NAME: budgetin
-      DB_HOST: localhost
-      DB_PORT: 3306
-      JPA_SHOW_SQL: true
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK ${{ matrix.java }}
-      uses: actions/setup-java@v4
-      with:
-        java-version: ${{ matrix.java }}
-        distribution: 'microsoft'
-        cache: maven
-    - name: Start MySQL
-      run: |
-        sudo /etc/init.d/mysql start
-        mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;" -u$DB_USERNAME -p$DB_PASSWORD
-    - name: Build with Maven
-      run: mvn clean test
-
   check_coverage:
     needs: unit_test
     runs-on: ubuntu-latest
