@@ -18,7 +18,7 @@ jobs:
       matrix:
         distribution: ['zulu', 'temurin', 'microsoft']
         java: ['17', '21']
-    name: Unit Test with Java ${{ matrix.Java }} ${{ matrix.distribution }}
+    name: Unit Test with JDK ${{ matrix.Java }} ${{ matrix.distribution }}
     env:
       DB_USERNAME: root
       DB_PASSWORD: root
@@ -27,7 +27,7 @@ jobs:
       DB_PORT: 3306
       JPA_SHOW_SQL: true
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.1
     - name: Set up JDK ${{ matrix.java }} ${{ matrix.distribution }}
       uses: actions/setup-java@v4
       with:
@@ -46,7 +46,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    name: Unit Test with Java 21
+    name: Code Coverage Check with JDK 21
     env:
       DB_USERNAME: root
       DB_PASSWORD: root
@@ -55,7 +55,7 @@ jobs:
       DB_PORT: 3306
       JPA_SHOW_SQL: true
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.1
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
@@ -86,10 +86,11 @@ jobs:
           git push
         fi
     - name: Upload JaCoCo coverage report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4.3.1
       with:
         name: jacoco-report
         path: target/site/jacoco/
+        overwrite: true
 
   build_package:
     runs-on: ubuntu-latest
@@ -99,7 +100,7 @@ jobs:
       pull-requests: write
     name: Build app with Maven and JDK 21
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4.1.1
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
@@ -115,9 +116,10 @@ jobs:
         path: target/budgetin.jar
         overwrite: true
 
+  # TODO: CI CD
   job_1:
+    name: 1 Add 3 and 7
     needs: code_coverage
-    name: Add 3 and 7
     runs-on: ubuntu-latest
     steps:
       - shell: bash
@@ -131,7 +133,7 @@ jobs:
           overwrite: true
 
   job_2:
-    name: Multiply by 9
+    name: 2 Multiply by 9
     needs: job_1
     runs-on: windows-latest
     steps:
@@ -151,7 +153,7 @@ jobs:
           overwrite: true
 
   job_3:
-    name: Display results
+    name: 3 Display results
     needs: [job_1, code_coverage]
     runs-on: macOS-latest
     steps:
@@ -166,7 +168,7 @@ jobs:
           echo The result is $value
 
   job_4:
-    name: Display final results
+    name: 4 Display final results
     needs: [job_2, code_coverage]
     runs-on: macOS-latest
     steps:
@@ -181,8 +183,8 @@ jobs:
           echo The result is $value
 
   job_5:
-    name: Display results
-    needs: [code_coverage, unit_test_for_old_java_version]
+    name: 5 Display results
+    needs: [code_coverage, unit_test_for_old_java_version, build_package]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
