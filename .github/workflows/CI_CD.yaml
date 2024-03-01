@@ -171,9 +171,9 @@ jobs:
           value=`cat version.txt`
           echo The result is $value
 
-  job_4:
-    name: 4 Display final results
     needs: [job_2, build_package]
+  release:
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
       - name: Download math result for job 2
@@ -188,7 +188,7 @@ jobs:
 
   job_5:
     name: 5 Display results
-    needs: [job_4, job_3]
+    needs: [release, job_3]
     runs-on: ubuntu-latest
     steps:
       - name: Download math result for job 2
