@@ -188,7 +188,7 @@ jobs:
 
   job_5:
     name: 5 Display results
-    needs: [job_2, job_3, build_package]
+    needs: [job_4, build_package]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
