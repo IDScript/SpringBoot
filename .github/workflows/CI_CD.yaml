@@ -119,7 +119,7 @@ jobs:
 
   build_package:
     runs-on: ubuntu-latest
-    needs: [versioning, unit_test_for_old_java_version]
+    needs: unit_test_for_old_java_version
     permissions:
       contents: write
       pull-requests: write
