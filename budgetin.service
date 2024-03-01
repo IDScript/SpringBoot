@@ -6,9 +6,10 @@ Wants=network-online.target systemd-networkd-wait-online.service
 [Service]
 User=idscript
 Group=idscript
-ExecStart=/home/idscript/dev/mvn/bin/mvn spring-boot:run
+WorkingDirectory=/home/idscript/app
 Environment=JAVA_HOME=/home/idscript/dev/jdk
-WorkingDirectory=/home/idscript/work/SpringBoot
+ExecStart=/home/idscript/dev/jdk/bin/java /home/idscript/app/BudgetIn.jar
+ExecStop=/bin/kill -15 $MAINPID
 StandardOutput=syslog
 StandardError=syslog
 SuccessExitStatus=143
