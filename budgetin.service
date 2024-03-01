@@ -8,7 +8,7 @@ User=idscript
 Group=idscript
 WorkingDirectory=/home/idscript/app
 Environment=JAVA_HOME=/home/idscript/dev/jdk
-ExecStart=/home/idscript/dev/jdk/bin/java /home/idscript/app/BudgetIn.jar
+ExecStart=/home/idscript/dev/jdk/bin/java -jar /home/idscript/app/BudgetIn.jar
 ExecStop=/bin/kill -15 $MAINPID
 StandardOutput=syslog
 StandardError=syslog
