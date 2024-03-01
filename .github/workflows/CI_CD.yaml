@@ -173,7 +173,7 @@ jobs:
 
   job_4:
     name: 4 Display final results
-    needs: job_2
+    needs: [job_2, job_3]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
