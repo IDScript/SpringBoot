@@ -153,20 +153,6 @@ jobs:
           path: CHANGELOG.md
           overwrite: true
 
-  job_3:
-    name: 3 Display results
-    needs: [versioning]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download math result for job 2
-        uses: actions/download-artifact@v4.1.3
-        with:
-          name: gitversion
-      - name: Print the final result
-        run: |
-          value=`cat version.txt`
-          echo The result is $value
-
   release:
     name: Create Release
     needs: [release_note, build_package]
@@ -192,6 +178,20 @@ jobs:
   job_5:
     name: 5 Display results
     needs: build_package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download math result for job 2
+        uses: actions/download-artifact@v4.1.3
+        with:
+          name: gitversion
+      - name: Print the final result
+        run: |
+          value=`cat version.txt`
+          echo The result is $value
+
+  job_3:
+    name: 3 Display results
+    needs: [job_5, release]
     runs-on: ubuntu-latest
     steps:
       - name: Download math result for job 2
