@@ -174,7 +174,6 @@ jobs:
           tag: ${{ steps.version.outputs.content }}
           bodyFile: "./changelog/CHANGELOG.md"
 
-  # TODO: Deploy and Restart service
   deploy:
     name: Deploy new Package
     needs: build_package
@@ -182,6 +181,8 @@ jobs:
     steps:
       - name: Download all Artifact
         uses: actions/download-artifact@v4.1.3
+        with:
+          name: BudgetIn
       - name: copy file via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -190,9 +191,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          source: "./BudgetIn/BudgetIn.jar"
+          source: "./BudgetIn.jar"
           target: /home/idscript/app
 
+  # TODO: Restart service
   job_3:
     name: 3 Display results
     needs: [deploy, release]
@@ -200,6 +202,8 @@ jobs:
     steps:
       - name: Download all Artifact
         uses: actions/download-artifact@v4.1.3
+        with:
+          name: gitversion
       - name: Print the final result
         run: |
           value=`cat version.txt`
