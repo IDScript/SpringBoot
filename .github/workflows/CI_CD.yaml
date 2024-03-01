@@ -119,7 +119,7 @@ jobs:
 
   build_package:
     runs-on: ubuntu-latest
-    needs: [unit_test_for_old_java_version, versioning]
+    needs: versioning
     permissions:
       contents: write
       pull-requests: write
@@ -166,7 +166,6 @@ jobs:
         with:
           name: gitversion
       - name: Print the final result
-        shell: bash
         run: |
           value=`cat version.txt`
           echo The result is $value
@@ -176,15 +175,9 @@ jobs:
     needs: [release_note, build_package]
     runs-on: ubuntu-latest
     steps:
-      - name: Download math result for job 2
-        uses: actions/download-artifact@v4.1.3
-        with:
-          name: gitversion
-      - name: Print the final result
-        shell: bash
-        run: |
-          value=`cat version.txt`
-          echo The result is $value
+      - uses: actions/download-artifact@v4.1.3
+      - name: Display structure of downloaded files
+        run: ls -R
 
   job_5:
     name: 5 Display results
@@ -196,7 +189,6 @@ jobs:
         with:
           name: gitversion
       - name: Print the final result
-        shell: bash
         run: |
           value=`cat version.txt`
           echo The result is $value
