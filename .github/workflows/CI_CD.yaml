@@ -158,7 +158,7 @@ jobs:
 
   job_3:
     name: 3 Display results
-    needs: code_coverage
+    needs: [code_coverage, versioning]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
