@@ -140,20 +140,18 @@ jobs:
         path: target/budgetin.jar
         overwrite: true
 
-  # TODO: CI CD
   release_note:
     name: Create Release Note
     needs: code_coverage
     runs-on: ubuntu-latest
     steps:
-      - name: Download math result for job 1
-        uses: actions/download-artifact@v4.1.3
+      - uses: actions/checkout@v4.1.1
+      - name: Upload CHANGELOG.md
+        uses: actions/upload-artifact@v4.3.1
         with:
-          name: gitversion
-      - shell: bash
-        run: |
-          value=`cat version.txt`
-          echo The result is $value
+          name: changelog
+          path: CHANGELOG.md
+          overwrite: true
 
   job_3:
     name: 3 Display results
@@ -176,7 +174,9 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4.1.3
       - name: Display structure of downloaded files
-        run: ls -R
+        run: |
+          ls -R
+          mv ./budgetin/budgetin.jar ./budgetin/BudgetIn.jar
       - name: Read version
         id: version
         uses: juliangruber/read-file-action@v1
@@ -185,10 +185,9 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
-          artifacts: "./budgetin/budgetin.jar"
+          artifacts: "./budgetin/BudgetIn.jar"
           tag: ${{ steps.version.outputs.content }}
-          # commit: ${{ github.sha }}
-          # token: ${{ secrets.GH_TOKEN }}
+          bodyFile: "./changelog/CHANGELOG.md"
 
   job_5:
     name: 5 Display results
