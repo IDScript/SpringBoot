@@ -93,7 +93,7 @@ jobs:
         overwrite: true
 
   versioning:
-    needs: code_coverage
+    needs: [code_coverage, unit_test_for_old_java_version]
     name: Create version number
     runs-on: ubuntu-latest
     steps:
