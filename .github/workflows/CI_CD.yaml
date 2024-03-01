@@ -136,8 +136,8 @@ jobs:
     - name: Upload package artifact
       uses: actions/upload-artifact@v4.3.1
       with:
-        name: budgetin
-        path: target/budgetin.jar
+        name: BudgetIn
+        path: target/BudgetIn.jar
         overwrite: true
 
   release_note:
@@ -176,7 +176,6 @@ jobs:
       - name: Display structure of downloaded files
         run: |
           ls -R
-          mv ./budgetin/budgetin.jar ./budgetin/BudgetIn.jar
       - name: Read version
         id: version
         uses: juliangruber/read-file-action@v1
@@ -185,7 +184,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
-          artifacts: "./budgetin/BudgetIn.jar"
+          artifacts: "./BudgetIn/BudgetIn.jar"
           tag: ${{ steps.version.outputs.content }}
           bodyFile: "./changelog/CHANGELOG.md"
 
