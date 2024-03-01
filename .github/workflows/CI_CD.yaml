@@ -177,6 +177,18 @@ jobs:
       - uses: actions/download-artifact@v4.1.3
       - name: Display structure of downloaded files
         run: ls -R
+      - name: Read version
+        id: version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./gitversion/version.txt
+      - name: Create Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          artifacts: "./budgetin/budgetin.jar"
+          tag: ${{ steps.version.outputs.content }}
+          # commit: ${{ github.sha }}
+          # token: ${{ secrets.GH_TOKEN }}
 
   job_5:
     name: 5 Display results
