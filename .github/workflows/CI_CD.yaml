@@ -144,7 +144,7 @@ jobs:
   # TODO: CI CD
   job_2:
     name: 2 Multiply by 9
-    needs: versioning
+    needs: build_package
     runs-on: windows-latest
     steps:
       - name: Download math result for job 1
@@ -188,7 +188,7 @@ jobs:
 
   job_5:
     name: 5 Display results
-    needs: [job_4, build_package]
+    needs: [job_4, job_2]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
