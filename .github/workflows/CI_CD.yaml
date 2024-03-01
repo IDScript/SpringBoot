@@ -142,8 +142,8 @@ jobs:
         overwrite: true
 
   # TODO: CI CD
-  job_2:
-    name: 2 Multiply by 9
+  release_note:
+    name: Create Release Note
     needs: versioning
     runs-on: ubuntu-latest
     steps:
@@ -171,9 +171,9 @@ jobs:
           value=`cat version.txt`
           echo The result is $value
 
-    needs: [job_2, build_package]
   release:
     name: Create Release
+    needs: [release_note, build_package]
     runs-on: ubuntu-latest
     steps:
       - name: Download math result for job 2
