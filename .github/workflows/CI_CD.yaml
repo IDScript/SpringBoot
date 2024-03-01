@@ -158,7 +158,7 @@ jobs:
 
   job_3:
     name: 3 Display results
-    needs: [versioning, code_coverage]
+    needs: versioning
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
@@ -173,7 +173,7 @@ jobs:
 
   job_4:
     name: 4 Display final results
-    needs: [job_2, code_coverage]
+    needs: job_2
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
@@ -188,7 +188,7 @@ jobs:
 
   job_5:
     name: 5 Display results
-    needs: [code_coverage, unit_test_for_old_java_version, build_package]
+    needs: [job_2, job_3, build_package]
     runs-on: macOS-latest
     steps:
       - name: Download math result for job 2
