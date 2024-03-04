@@ -3,8 +3,8 @@ name: 🧪 CI and 🚀 CD
 on:
   push:
     branches: ["main", "dev"]
-    paths:
-      - 'src/**'
+    # paths:
+    #   - 'src/**'
 
 jobs:
   unit_test_for_old_java_version:
