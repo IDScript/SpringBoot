@@ -131,15 +131,12 @@ jobs:
         cache: maven
     - uses: actions/download-artifact@v4.1.3
     - name: Display structure of downloaded files
-      run: |
-          ls -R
-    - name: Read version
-      id: version
-      uses: juliangruber/read-file-action@v1
       with:
-        path: ./gitversion/version.txt
+        name: gitversion
     - name: Build package with Maven
-      run: sed 's/\<version\>9.9.9.*/\<version\>${{ steps.version.outputs.content }}\<\/version\>/' pom.xml > pom2.xml
+      run: |
+        VER=`cat version.txt`
+        sed `s/\<version\>9.9.9.*/\<version\>$VER\<\/version\>/` pom.xml > pom2.xml
     - name: Build package with Maven
       run: mvn clean package -Dmaven.test.skip=true
     - name: Upload package artifact
