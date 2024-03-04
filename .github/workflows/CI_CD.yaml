@@ -139,7 +139,7 @@ jobs:
       with:
         path: ./gitversion/version.txt
     - name: Build package with Maven
-      run: sed "s/\<version\>9.9.9.*/\<version\>${{ steps.version.outputs.content }}\<\/version\>/" pom.xml > pom2.xml
+      run: sed 's/\<version\>9.9.9.*/\<version\>${{ steps.version.outputs.content }}\<\/version\>/' pom.xml > pom2.xml
     - name: Build package with Maven
       run: mvn clean package -Dmaven.test.skip=true
     - name: Upload package artifact
