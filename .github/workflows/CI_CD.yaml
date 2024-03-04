@@ -129,8 +129,8 @@ jobs:
         java-version: '21'
         distribution: 'microsoft'
         cache: maven
-    - uses: actions/download-artifact@v4.1.3
-    - name: Display structure of downloaded files
+    - name: Download Version
+      uses: actions/download-artifact@v4.1.3
       with:
         name: gitversion
     - name: Build package with Maven
