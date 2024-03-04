@@ -135,8 +135,10 @@ jobs:
         name: gitversion
     - name: Build package with Maven
       run: |
+        ls -la
         VER=`cat version.txt`
         sed `s/\<version\>9.9.9.*/\<version\>$VER\<\/version\>/` pom.xml > pom2.xml
+        mv pom2.xml pom.xml
     - name: Build package with Maven
       run: mvn clean package -Dmaven.test.skip=true
     - name: Upload package artifact
