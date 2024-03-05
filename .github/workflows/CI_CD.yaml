@@ -201,7 +201,7 @@ jobs:
           source: "./BudgetIn.jar"
           target: /home/idscript/app
 
-  job_3:
+  restart:
     name: Restart Server Services
     needs: [deploy, release]
     runs-on: ubuntu-latest
